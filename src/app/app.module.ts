@@ -23,6 +23,14 @@ import { HotToastModule } from '@ngneat/hot-toast';
 import { MatMenuModule } from '@angular/material/menu';
 import { ProfileComponent } from './components/profile/profile.component';
 
+import { MatListModule } from '@angular/material/list';
+import {} from '@angular/material/form-field';
+import {} from '@angular/material/input';
+import { MatAutocompleteModule } from '@angular/material/autocomplete';
+import { DateDisplayPipe } from './pipes/date-display.pipe';
+import { TimeAgoPipe } from 'time-ago-pipe';
+import { DatePipe } from '@angular/common';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -31,6 +39,7 @@ import { ProfileComponent } from './components/profile/profile.component';
     LandingComponent,
     SignUpComponent,
     ProfileComponent,
+    DateDisplayPipe,
   ],
   imports: [
     BrowserModule,
@@ -49,8 +58,12 @@ import { ProfileComponent } from './components/profile/profile.component';
     provideFirestore(() => getFirestore()),
     HotToastModule.forRoot(),
     MatMenuModule,
+    MatListModule,
+    MatInputModule,
+    MatFormFieldModule,
+    MatAutocompleteModule,
   ],
-  providers: [],
+  providers: [DatePipe],
   bootstrap: [AppComponent],
 })
 export class AppModule {}

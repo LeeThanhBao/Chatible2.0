@@ -25,6 +25,7 @@
     "@ngneat/overview": "^3.0.0",
     "@ngneat/until-destroy": "^9.2.0",
     "rxjs": "~7.5.0",
+    "time-ago-pipe": "^1.3.2",
     "tslib": "^2.3.0",
     "zone.js": "~0.11.4"
   },

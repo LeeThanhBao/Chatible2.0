@@ -7,7 +7,7 @@ import { HotToastService } from '@ngneat/hot-toast';
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
-  styleUrls: ['./login.component.css'],
+  styleUrls: ['./login.component.scss'],
 })
 export class LoginComponent implements OnInit {
   loginForm = new FormGroup({
@@ -37,14 +37,17 @@ export class LoginComponent implements OnInit {
     }
 
     const { email, password } = this.loginForm.value;
-    this.authService.login(email, password).pipe(
-      this.toast.observe({
-        success: 'Logged in successfully',
-        loading: 'Logging in...',
-        error: 'There was an error'
-      })
-    ).subscribe(() => {
-      this.router.navigate(['/home']);
-    });
+    this.authService
+      .login(email, password)
+      .pipe(
+        this.toast.observe({
+          success: 'Logged in successfully',
+          loading: 'Logging in...',
+          error: 'There was an error',
+        })
+      )
+      .subscribe(() => {
+        this.router.navigate(['/home']);
+      });
   }
 }
