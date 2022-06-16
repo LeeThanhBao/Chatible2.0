@@ -107,9 +107,9 @@ export class ChatsService {
     chats.forEach((chat: Chat) => {
       const otherUserIndex =
         chat.userIds.indexOf(currentUserId ?? '') === 0 ? 1 : 0;
-      const otherUser = chat.users[otherUserIndex];
-      chat.chatName = otherUser.displayName;
-      chat.chatPic = otherUser.photoURL;
+      const { displayName, photoURL } = chat.users[otherUserIndex];
+      chat.chatName = displayName;
+      chat.chatPic = photoURL;
     });
 
     return chats;

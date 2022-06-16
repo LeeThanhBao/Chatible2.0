@@ -30,6 +30,7 @@ import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { DateDisplayPipe } from './pipes/date-display.pipe';
 import { TimeAgoPipe } from 'time-ago-pipe';
 import { DatePipe } from '@angular/common';
+import { MatDividerModule } from '@angular/material/divider';
 
 @NgModule({
   declarations: [
@@ -62,6 +63,7 @@ import { DatePipe } from '@angular/common';
     MatInputModule,
     MatFormFieldModule,
     MatAutocompleteModule,
+    MatDividerModule,
   ],
   providers: [DatePipe],
   bootstrap: [AppComponent],
