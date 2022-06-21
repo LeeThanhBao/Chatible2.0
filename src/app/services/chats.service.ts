@@ -1,16 +1,17 @@
 import { Injectable } from '@angular/core';
 import {
   addDoc,
+  collection,
   collectionData,
   doc,
   Firestore,
   getDoc,
   orderBy,
   query,
+  Timestamp,
   updateDoc,
   where,
 } from '@angular/fire/firestore';
-import { collection, Timestamp } from '@firebase/firestore';
 import { concatMap, from, map, Observable, take, tap } from 'rxjs';
 import { Chat, Message } from '../models/chat';
 import { ProfileUser } from '../models/user-profile';
