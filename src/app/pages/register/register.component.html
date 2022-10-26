@@ -1,0 +1,28 @@
+    <form [formGroup]="signUpForm" (ngSubmit)="submit()">
+      <h3>Chattible</h3>
+
+        <label for="username">Username</label>
+        <!-- <input type="text" placeholder="Email or Phone" id="username"> -->
+        <input autocomplete="off" formControlName="name" type="text" matInput placeholder="Display Name">
+
+        <label for="phone">Email</label>
+        <!-- <input type="email" placeholder="Email" id="email"> -->
+        <input formControlName="email" type="email" matInput placeholder="Email">
+      
+        <label for="password">Password</label>
+        <!-- <input type="password" placeholder="Password" id="password"> -->
+        <input autocomplete="off" formControlName="password" type="password" matInput placeholder="Password">
+
+      <!-- <label for="phone">Phone number</label>
+      <input type="text" placeholder="Phone number" id="phonenumber"> -->
+
+      <!-- <div *ngIf="firebaseErrorMessage != ''" class="error-style">
+        <span>{{ firebaseErrorMessage }}</span>
+      </div> -->
+    
+      <button style="color: #263238;" type="submit">Register your account</button>
+      <button><a style="color: #263238;" href="./login">Ready to login?</a></button>
+
+    </form>
+  
+    

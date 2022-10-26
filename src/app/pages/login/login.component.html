@@ -1,0 +1,21 @@
+<form [formGroup]="loginForm" (ngSubmit)="submit()" type="">
+  <h3>Chattible</h3>
+
+  <label for="Email">Email</label>
+  <!-- <input type="text" placeholder="Email or Phone" id="username"> -->
+  <input autocomplete="off" formControlName="email" type="email" matInput placeholder="Email" />
+
+  <label for="password">Password</label>
+  <!-- <input type="password" placeholder="Password" id="password"> -->
+  <input autocomplete="off" formControlName="password" type="password" matInput placeholder="Password" />
+
+  <button style="color: #263238">Log In</button>
+  <button><a style="color: #263238" href="./register">Register</a></button>
+
+  <div class="google-btn">
+    <div class="google-icon-wrapper">
+      <img class="google-icon" src="https://upload.wikimedia.org/wikipedia/commons/5/53/Google_%22G%22_Logo.svg" />
+    </div>
+    <a class="btn-text">Login with Google</a>
+  </div>
+</form>

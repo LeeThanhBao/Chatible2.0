@@ -1,0 +1,172 @@
+<nav class="open">
+  <div class="sidebar">
+    <div class="logo">
+      <i class="bx bx-menu menu-icon"></i>
+      <span class="logo-name">Chatible</span>
+    </div>
+    <!-- <input type="text" id="remoteId" placeholder="enter Id you want to call" /> -->
+    <!-- <h3 id="my-peerId">Your peerId: {{ peer.id }}</h3>
+    <video id="localStream" width="300" controls></video>
+    <video id="remoteStream" width="300" controls></video> -->
+    <!-- <button (click)="answerCall()">Answer</button> -->
+    <div class="sidebar-content">
+      <ul class="lists">
+        <li class="list">
+          <a href="./profile" class="nav-link">
+            <i class="bi bi-body-text icon"></i>
+            <span class="link">Profile</span>
+          </a>
+        </li>
+        <li class="list">
+          <a href="#" class="nav-link">
+            <i class="bi bi-bell-fill icon"></i>
+            <span class="link">Notifications</span>
+          </a>
+        </li>
+        <li class="list">
+          <a href="#" class="nav-link">
+            <i class="bi bi-chat-right-text-fill icon"></i>
+            <span class="link">Messages</span>
+          </a>
+        </li>
+        <li class="list">
+          <a href="#" class="nav-link">
+            <i class="bi bi-mic-fill icon"></i>
+            <span class="link">Video call</span>
+          </a>
+        </li>
+        <li class="list">
+          <a href="#" class="nav-link">
+            <i class="bi bi-layout-text-sidebar-reverse icon"></i>
+            <span class="link">To-do list</span>
+          </a>
+        </li>
+        <li class="list">
+          <a href="#" class="nav-link">
+            <i class="bi bi-microsoft icon"></i>
+            <span class="link">[Place holder]</span>
+          </a>
+        </li>
+        <li class="list">
+          <a href="#" class="nav-link">
+            <i class="bi bi-microsoft icon"></i>
+            <span class="link">[Place holder]</span>
+          </a>
+        </li>
+        <li class="list">
+          <a class="nav-link">
+            <i class="bi bi-microsoft icon"></i>
+            <input type="text" id="remoteId" placeholder="enter Id you want to call" />
+          </a>
+        </li>
+      </ul>
+
+      <div class="bottom-cotent">
+        <li class="list">
+          <a href="#" class="nav-link">
+            <i class="bi bi-wrench-adjustable-circle-fill icon"></i>
+            <span class="link">Settings</span>
+          </a>
+        </li>
+        <li class="list">
+          <a href="#" class="nav-link" (click)="logout()">
+            <i class="bi bi-arrow-left-square-fill icon"></i>
+            <span class="link">Logout</span>
+          </a>
+        </li>
+      </div>
+    </div>
+  </div>
+</nav>
+
+<section class="overlay">
+
+  <div class="friendlist">
+    <div class="right-card-header">
+      <span class="header-bold">Looking for someone?</span>
+      <div class="searchbarcontainer">
+        <form role="search" method="get" class="search-form form" action="">
+          <label>
+            <input type="search" class="search-field" placeholder="Type something..." 
+            [matAutocomplete]="users"
+            [formControl]="searchControl"/>
+          </label>
+          
+          <mat-autocomplete #users="matAutocomplete">
+            <mat-option *ngFor="let user of users$ | async" [value]="''" (click)="createChat(user)">
+              {{ user.displayName }}
+            </mat-option>
+          </mat-autocomplete>
+
+          <i class="bi bi-search search-submit button"></i>
+        </form>
+      </div>
+    </div>
+
+    <mat-selection-list [multiple]="false" [formControl]="chatListControl">
+
+      <mat-divider></mat-divider>
+      <mat-list-option *ngFor="let chat of myChats$ | async" [value]="chat.id">
+        <img matListAvatar [src]="chat.chatPic ? chat.chatPic : 'assets/images/avatar1.png'"/>
+        <p mat-line class="chat-title"><span class="name-font">{{ chat.chatName }}</span></p>
+        <p mat-line class="chat-title"><span class="chat-date">{{ chat.lastMessageDate | dateDisplay }}</span></p>
+        <p mat-line>{{ chat.lastMessage }}</p>
+        <mat-divider></mat-divider>
+      </mat-list-option>
+      
+    </mat-selection-list>
+
+    <!-- <div class="right-card-body" [formControl]="chatListControl">
+      <div class="right-card-body-container">
+        <div class="card" (click)="onclickUser(chatUser.uid)">
+          <div class="profile">
+            <div>
+              <img class="avatar" [src]="chat.chatPic ? chat.chatPic : 'assets/images/avatar1.png'"/>
+            </div>
+            <div class="profile-info">
+              <span class="name-font">{{ chat.chatName }}</span>
+              <span class="chat-date">{{ chat.lastMessageDate | dateDisplay}}</span>
+              <span class="job-font"><p mat-line>{{ chat.lastMessage }}</p></span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div> -->
+
+  </div>
+
+  <div class="chatarea" *ngIf="selectedChat$ | async as selectedChat">
+    <button (click)="openWindow()">Call</button>
+    <div class="messages-header" *ngIf="selectedChat$ | async as selectedChat">
+      <img [src]="selectedChat.chatPic ? selectedChat.chatPic: 'assets/images/avatar1.png'"/>
+      <h2>{{ selectedChat.chatName }}</h2>
+    </div>
+    
+    <mat-divider></mat-divider>
+
+    <div class="chat-area">
+      <ng-container *ngIf="user$ | async as currentUser">
+        <ng-container *ngIf="messages$ | async as messages">
+          <div class="chat-bubble-container" [ngClass]="{ sender: message.senderId === currentUser.uid }"
+            *ngFor="let message of messages">
+            <div class="chat-bubble">
+              {{ message.text }}
+              <span class="chat-time">{{message.sentDate | dateDisplay}}</span>
+            </div>
+          </div>
+        </ng-container>
+      </ng-container>
+      <div #endOfChat></div>
+    </div>
+
+    <div class="input-area">
+      <mat-form-field appearance="outline">
+        <input matInput placeholder="Enter your message..." [formControl]="messageControl"
+          (keydown.enter)="sendMessage()" />
+          <button mat-icon-button matSuffix (click)="sendMessage()">
+            <mat-icon>send</mat-icon>
+          </button>
+      </mat-form-field>
+    </div>
+  </div>
+</section>

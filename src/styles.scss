@@ -1,31 +1,38 @@
-/* You can add global styles to this file, and also import other style files */
+// PINK BG
+// background-image: linear-gradient(to bottom right, rgb(235, 76, 171), rgb(227, 77, 171), rgb(218, 78, 170), rgb(210, 80, 170), rgb(202, 81, 170), rgb(193, 82, 170), rgb(185, 83, 169), rgb(176, 84, 169), rgb(168, 85, 169), rgb(160, 87, 169), rgb(151, 88, 168), rgb(143, 89, 168));
+    
+// PURPLE BG
+// background: #8E2DE2;
+// background: -webkit-linear-gradient(to right, #4A00E0, #8E2DE2);
+// background: linear-gradient(to right, #4A00E0, #8E2DE2);
 
-html, body { height: 100%; }
-body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+//WHITE-BLUE BG
+//background-image: linear-gradient( 103.3deg,  rgba(252,225,208,1) 30%, rgba(255,173,214,1) 55.7%, rgba(162,186,245,1) 81.8% );
 
-.form-container {
-    display: block;
-    max-width: 300px;
+//RED-BLUE BG
+// background-color: rgb(60, 54, 173);
+// background-image: linear-gradient( 113.3deg,  rgba(217,9,27,1) 6.9%, rgba(22,68,150,1) 75% );
+
+// body {
+//     background: url(https://source.unsplash.com/1920x2400?hdr,sunset,ocean);
+//     background-size: cover;
+//     background-repeat: no-repeat;  
+// }
+
+// @media only screen and (max-width: 600px) {
+//     body {
+//       background:url(https://source.unsplash.com/1080x2400?sunset+birdeye+ocean);
+//     }
+// }
+body {
+    background: url(./assets/images/background2.jpg);
+    background-repeat: no-repeat;
+    background-size: 100%;
     margin: auto;
-
-    background: #eceff1;
-    padding: 48px;
-    border-radius: 16px;
+    padding: auto;
+    font-family: Roboto, "Helvetica Neue", sans-serif; 
 }
-
-.form-container mat-form-field {
-    width: 100%;
-}
-
-.center {
-    display: flex;
-    justify-content: center;
-}
-
-.margin-top {
-    margin-top: 16px;
-}
-
-.text-center {
-    text-align: center;
+html, body { 
+    width: auto;
+    height: auto;
 }
