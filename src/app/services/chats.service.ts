@@ -24,7 +24,7 @@ export class ChatsService {
   constructor(
     private firestore: Firestore,
     private usersService: UsersService
-  ) {}
+  ) { }
 
   get myChats$(): Observable<Chat[]> {
     const ref = collection(this.firestore, 'chats');
@@ -96,6 +96,26 @@ export class ChatsService {
         updateDoc(chatRef, { lastMessage: message, lastMessageDate: today })
       )
     );
+  }
+
+  addImageMessage(chatId: string,image:String):Observable<any>{
+    const ref = collection(this.firestore, 'chats', chatId, 'messages');
+    const chatRef = doc(this.firestore, 'chats', chatId);
+    const today = Timestamp.fromDate(new Date());
+    return this.usersService.currentUserProfile$.pipe(
+      take(1),
+      concatMap((user) =>
+        addDoc(ref, {
+          image: image,
+          senderId: user?.uid,
+          sentDate: today,
+        })
+      ),
+      concatMap(() =>
+        updateDoc(chatRef, { lastMessage: `send image`, lastMessageDate: today })
+      )
+    );
+
   }
 
   getChatMessages$(chatId: string): Observable<Message[]> {

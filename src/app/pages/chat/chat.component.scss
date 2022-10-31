@@ -213,11 +213,15 @@ nav.open {
 		scale: 1.2;
 	}
 }
-.avatar {
+.friendlistavatar {
 	vertical-align: middle;
 	width: 50px;
 	height: 50px;
-	border-radius: 50%;
+	border-radius: 15px;
+	box-shadow: 2px 2px 5px #0005;
+	text-shadow: 1px 1px 2px #0005;
+	margin: 16px 16px 16px 10px;
+	object-fit: cover;
 }
 
 //SEARCH BAR
@@ -462,8 +466,8 @@ input {
 	background-color: transparent;
 }
 .btn-container .btn1 {
-	width: 60px;
-	height: 60px;
+	width: 50px;
+	height: 50px;
 	padding: auto;
 	border-radius: 10px;
 	border: 0;
@@ -506,6 +510,8 @@ input {
 	border-radius: 15px;
 	box-shadow: 2px 2px 5px #0005;
 	text-shadow: 1px 1px 2px #0005;
+	margin: 16px 16px 16px 10px;
+	object-fit: cover;
 }
 
 .profile-image-toolbar {
@@ -537,11 +543,11 @@ input {
 .chat-title {
 	display: flex;
 	justify-content: space-between;
+	margin: 10px
 }
 .chat-name {
 	font-weight: 500;
 }
-
 .chat-date {
 	font-size: 0.7rem;
 	color: rgba(0,0,0,0.7)
@@ -561,18 +567,18 @@ input {
 	display: flex;
 	margin-bottom: 8px;
 }
-img {
-	border-radius: 50%;
+.imgChat {
+	border-radius: 12.8px;
 	object-fit: cover;
-	margin-right: 16px;
-	height: 35px;
-	cursor: pointer
+	// margin: 16px 16px 16px 10px;
+	width: 50%;
+	height: 50%;
 }
 h2 {
 	margin: 0;
  }
 .chat-area {
-	height: calc(100vh - 270px);
+	height: calc(85vh - 270px);
 	display: flex;
 	flex-direction: column;
 	align-items: flex-start;
@@ -586,16 +592,23 @@ h2 {
 	width: 100%;
 	justify-content: flex-start;                
 }
-.chat-bubble {
-	background: white;
-	padding-top: 8px;
-	padding-bottom: 18px;
-	padding-left: 8px;
-	padding-right: 100px;
+.chat-bubble-message {
+	background: #c5cae9;
+	padding: 8px 100px 18px 8px;
 	margin-bottom: 16px;
 	border-radius: 8px;
 	width: fit-content;
 	position: relative;
+}
+.chat-bubble-img {
+	background: transparent;
+	padding: 8px 0 18px 8px;
+	margin-bottom: 16px;
+	border-radius: 8px;
+	// width: fit-content;
+	position: relative;
+	display: flex;
+	justify-content: flex-end;
 }
 .chat-time {
 	position: absolute;
@@ -606,9 +619,6 @@ h2 {
 }
 .chat-bubble-container.sender {
 	justify-content: flex-end;
-}
-.chat-bubble {
-	background: #c5cae9;
 }
 .input-area {
 	padding-top: 16px;

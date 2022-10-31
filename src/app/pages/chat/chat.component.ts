@@ -1,7 +1,7 @@
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { Router } from '@angular/router';
-import { combineLatest, map, Observable, of, startWith, switchMap, tap} from 'rxjs';
+import { combineLatest, map, Observable, of, startWith, switchMap, tap } from 'rxjs';
 
 import { MatDialog, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import Peer from 'peerjs';
@@ -22,6 +22,7 @@ import { AuthenticationService } from 'src/app/services/authentication.service';
 import { CallService } from 'src/app/services/call.service';
 import { DataService } from 'src/app/services/data.service';
 import { VideoCallComponent } from 'src/app/components/video-call/video-call.component';
+import { ImageUploadService } from 'src/app/services/image-upload.service';
 
 
 @Component({
@@ -33,7 +34,8 @@ export class ChatComponent implements OnInit {
   // peer: Peer;
   users: ProfileUser[] = [];
   chatUser!: ProfileUser;
-
+  public user: any;
+  public currentUser$: any = this.authService.currentUser$;
   // searchControl = new FormControl('');
   // messageControl = new FormControl('');
   // chatListControl = new FormControl('');
@@ -87,11 +89,6 @@ export class ChatComponent implements OnInit {
   //   });
   // }
 
-  public onclickUser(uid: any) {
-    this.data.getUser(uid);
-    this.chatUser = this.data.user;
-    console.log(this.chatUser);
-  }
   // // public answerCall() {
   // //   this.peer.on('call', (call) => {
   // //     const idLocalVideo = <HTMLVideoElement>(
@@ -109,6 +106,13 @@ export class ChatComponent implements OnInit {
   // //     });
   // //   });
   // // }
+
+  public onclickUser(uid: any) {
+    this.data.getUser(uid);
+    this.chatUser = this.data.user;
+    console.log(this.chatUser);
+  }
+
   openWindow() {
     this.diaLog.open(VideoCallComponent, {
       data: {
@@ -157,7 +161,8 @@ export class ChatComponent implements OnInit {
     public callService: CallService,
     private diaLog: MatDialog,
     public data: DataService,
-  ) {}
+    public uploadSer: ImageUploadService
+  ) { }
 
   ngOnInit(): void {
     this.data.getAllUser().subscribe((data) => {
@@ -170,6 +175,10 @@ export class ChatComponent implements OnInit {
         this.scrollToBottom();
       })
     );
+
+    this.currentUser$.subscribe((data: any) => {
+      this.user = data;
+    });
   }
 
   createChat(user: ProfileUser) {
@@ -209,7 +218,21 @@ export class ChatComponent implements OnInit {
       }
     }, 100);
   }
+  async uploadFile(event: any) {
 
+    let uid = this.user.uid
+    const file = event.target.files[0];
+    let date = new Date();
+    const selectedChatId = this.chatListControl.value[0];
+    const filePath = `images/chat/${selectedChatId}/${date}`;
+    let link$: Observable<any> = this.uploadSer.uploadImage(file, filePath)
+    link$.pipe(switchMap((link:any)=>{
+      return this.chatsService.addImageMessage(selectedChatId,link)
+    })).subscribe((res:any)=>{
+      console.log(res);
+    })
+  }
+  
   logout() {
     this.authService.logout().subscribe(() => {
       this.router.navigate(['']);
