@@ -2,6 +2,7 @@ import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { Router } from '@angular/router';
 import { combineLatest, map, Observable, of, startWith, switchMap, tap } from 'rxjs';
+import { DomSanitizer } from '@angular/platform-browser';
 
 import { MatDialog, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import Peer from 'peerjs';
@@ -161,7 +162,8 @@ export class ChatComponent implements OnInit {
     public callService: CallService,
     private diaLog: MatDialog,
     public data: DataService,
-    public uploadSer: ImageUploadService
+    public uploadSer: ImageUploadService,
+
   ) { }
 
   ngOnInit(): void {
@@ -171,8 +173,9 @@ export class ChatComponent implements OnInit {
     this.messages$ = this.chatListControl.valueChanges.pipe(
       map((value) => value[0]),
       switchMap((chatId) => this.chatsService.getChatMessages$(chatId)),
-      tap(() => {
+      tap((data) => {
         this.scrollToBottom();
+        console.log(data)
       })
     );
 
@@ -219,20 +222,27 @@ export class ChatComponent implements OnInit {
     }, 100);
   }
   async uploadFile(event: any) {
+    let name = event.target.files[0].name;
+    let type = event.target.files[0].type;
+    let regex = new RegExp(/image/g);
+    type = regex.test(type);
 
     let uid = this.user.uid
-    const file = event.target.files[0];
+    let file = event.target.files[0];
     let date = new Date();
-    const selectedChatId = this.chatListControl.value[0];
-    const filePath = `images/chat/${selectedChatId}/${date}`;
+    let selectedChatId = this.chatListControl.value[0];
+    let filePath = `images/chat/${selectedChatId}/${date}`;
+    if (!type) {
+      filePath = `files/chat/${selectedChatId}/${date}/${name}`;
+    }
     let link$: Observable<any> = this.uploadSer.uploadImage(file, filePath)
-    link$.pipe(switchMap((link:any)=>{
-      return this.chatsService.addImageMessage(selectedChatId,link)
-    })).subscribe((res:any)=>{
+    link$.pipe(switchMap((link: any) => {
+      return this.chatsService.addFileMessage(selectedChatId, link, name, type)
+    })).subscribe((res: any) => {
       console.log(res);
     })
   }
-  
+
   logout() {
     this.authService.logout().subscribe(() => {
       this.router.navigate(['']);

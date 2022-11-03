@@ -98,7 +98,17 @@ export class ChatsService {
     );
   }
 
-  addImageMessage(chatId: string,image:String):Observable<any>{
+  addFileMessage(chatId: string, link: String, name: String, type: Boolean): Observable<any> {
+    let payload: any = {
+      image: link
+    }
+    if (!type) {
+      payload =
+      {
+        file: link,
+        fileName: name
+      }
+    }
     const ref = collection(this.firestore, 'chats', chatId, 'messages');
     const chatRef = doc(this.firestore, 'chats', chatId);
     const today = Timestamp.fromDate(new Date());
@@ -106,13 +116,17 @@ export class ChatsService {
       take(1),
       concatMap((user) =>
         addDoc(ref, {
-          image: image,
+          ...payload,
           senderId: user?.uid,
           sentDate: today,
         })
       ),
-      concatMap(() =>
-        updateDoc(chatRef, { lastMessage: `send image`, lastMessageDate: today })
+      concatMap(() => {
+        let lastMessage = 'send image';
+        if (!type) lastMessage = 'send file'
+        return updateDoc(chatRef, { lastMessage: lastMessage, lastMessageDate: today })
+      }
+
       )
     );
 

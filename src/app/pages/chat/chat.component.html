@@ -165,12 +165,21 @@
             *ngFor="let message of messages">
 
             <div *ngIf="message.image" class="chat-bubble-img">
-              <img [src]="message.image" class="imgChat"/>
+              <img [src]="message.image" class="imgChat" />
               <span class="chat-time">{{message.sentDate | dateDisplay}}</span>
             </div>
 
-            <div *ngIf="!message.image" class="chat-bubble-message">
+            <div *ngIf="message.text" class="chat-bubble-message">
               {{ message.text }}
+              <span class="chat-time">{{message.sentDate | dateDisplay}}</span>
+            </div>
+            
+            <div *ngIf="message.file">
+              <a [href]="message.file" [download]="message.fileName">
+
+                <h1>{{message.fileName}}</h1>
+
+              </a> 
               <span class="chat-time">{{message.sentDate | dateDisplay}}</span>
             </div>
 
@@ -182,7 +191,8 @@
 
     <div class="input-area">
       <mat-form-field appearance="outline">
-        <input matInput placeholder="Enter your message..." [formControl]="messageControl" (keydown.enter)="sendMessage()"/>
+        <input matInput placeholder="Enter your message..." [formControl]="messageControl"
+          (keydown.enter)="sendMessage()" />
         <!-- <mat-icon matSuffix>sentiment_very_satisfied </mat-icon> -->
         <mat-icon matSuffix (click)="sendMessage()">send</mat-icon>
       </mat-form-field>

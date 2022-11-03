@@ -13,9 +13,12 @@ export interface Chat {
   chatName?: string;
 }
 
+
 export interface Message {
-  text: string;
-  senderId: string;
-  sentDate: Date & Timestamp;
-  image?:String;
+  text: string,
+  senderId: string,
+  sentDate: Date & Timestamp,
+  image?:String,
+  file?:String,
+  fileName?:String,
 }

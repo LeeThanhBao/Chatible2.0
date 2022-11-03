@@ -35,7 +35,7 @@ import { provideFirestore, getFirestore } from '@angular/fire/firestore';
 import { provideStorage, getStorage } from '@angular/fire/storage';
 import { VideoCallComponent } from './components/video-call/video-call.component';
 // import { provideDatabase, getDatabase } from '@angular/fire/database';
-
+import {HttpClientModule} from '@angular/common/http'
 @NgModule({
   declarations: [
     AppComponent,
@@ -51,6 +51,7 @@ import { VideoCallComponent } from './components/video-call/video-call.component
     ReactiveFormsModule,
     AppRoutingModule,
     FormsModule,
+    HttpClientModule,
     provideFirebaseApp(() => initializeApp(environment.firebase)),
     provideAuth(() => getAuth()),
     provideStorage(() => getStorage()),
