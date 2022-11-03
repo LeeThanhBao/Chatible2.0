@@ -1,7 +1,15 @@
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { Router } from '@angular/router';
-import { combineLatest, map, Observable, of, startWith, switchMap, tap } from 'rxjs';
+import {
+  combineLatest,
+  map,
+  Observable,
+  of,
+  startWith,
+  switchMap,
+  tap,
+} from 'rxjs';
 import { DomSanitizer } from '@angular/platform-browser';
 
 import { MatDialog, MAT_DIALOG_DATA } from '@angular/material/dialog';
@@ -24,7 +32,8 @@ import { CallService } from 'src/app/services/call.service';
 import { DataService } from 'src/app/services/data.service';
 import { VideoCallComponent } from 'src/app/components/video-call/video-call.component';
 import { ImageUploadService } from 'src/app/services/image-upload.service';
-
+import { SearchDialogComponent } from './components/search-dialog/search-dialog.component';
+import { NotificationDialogComponent } from './components/notification-dialog/notification-dialog.component';
 
 @Component({
   selector: 'app-chat',
@@ -162,9 +171,8 @@ export class ChatComponent implements OnInit {
     public callService: CallService,
     private diaLog: MatDialog,
     public data: DataService,
-    public uploadSer: ImageUploadService,
-
-  ) { }
+    public uploadSer: ImageUploadService
+  ) {}
 
   ngOnInit(): void {
     this.data.getAllUser().subscribe((data) => {
@@ -175,13 +183,17 @@ export class ChatComponent implements OnInit {
       switchMap((chatId) => this.chatsService.getChatMessages$(chatId)),
       tap((data) => {
         this.scrollToBottom();
-        console.log(data)
+        console.log(data);
       })
     );
 
     this.currentUser$.subscribe((data: any) => {
       this.user = data;
+      
     });
+    // this.users$.subscribe((data)=>{
+    //   console.log(data);
+    // })
   }
 
   createChat(user: ProfileUser) {
@@ -201,6 +213,33 @@ export class ChatComponent implements OnInit {
       });
   }
 
+  openNotificationDialog(user:any){
+    const dialogRef = this.diaLog.open(NotificationDialogComponent,{
+      width: '90%',
+      data: user,
+    })
+    dialogRef.afterClosed().subscribe((res)=>{
+      let result = this.usersService.friendRequest(res.accept,res.currentUser,res.user,res.userIndex)
+      if(result){
+        this.usersService.getUser(res.user.from).subscribe((data:any)=>{
+          this.createChat(data)
+          this.usersService.acceptFriendRequest(user,data)
+        })
+      }
+    })
+  }
+
+  searchUser() {
+    let result = this.searchControl.value;
+    const dialogRef = this.diaLog.open(SearchDialogComponent, {
+      width: '90%',
+      data: { keyword: result },
+    });
+    dialogRef.afterClosed().subscribe(() => {
+      this.searchControl.setValue('')
+    });
+    // console.log(result);
+  }
   sendMessage() {
     const message = this.messageControl.value;
     const selectedChatId = this.chatListControl.value[0];
@@ -227,7 +266,7 @@ export class ChatComponent implements OnInit {
     let regex = new RegExp(/image/g);
     type = regex.test(type);
 
-    let uid = this.user.uid
+    let uid = this.user.uid;
     let file = event.target.files[0];
     let date = new Date();
     let selectedChatId = this.chatListControl.value[0];
@@ -235,12 +274,21 @@ export class ChatComponent implements OnInit {
     if (!type) {
       filePath = `files/chat/${selectedChatId}/${date}/${name}`;
     }
-    let link$: Observable<any> = this.uploadSer.uploadImage(file, filePath)
-    link$.pipe(switchMap((link: any) => {
-      return this.chatsService.addFileMessage(selectedChatId, link, name, type)
-    })).subscribe((res: any) => {
-      console.log(res);
-    })
+    let link$: Observable<any> = this.uploadSer.uploadImage(file, filePath);
+    link$
+      .pipe(
+        switchMap((link: any) => {
+          return this.chatsService.addFileMessage(
+            selectedChatId,
+            link,
+            name,
+            type
+          );
+        })
+      )
+      .subscribe((res: any) => {
+        console.log(res);
+      });
   }
 
   logout() {

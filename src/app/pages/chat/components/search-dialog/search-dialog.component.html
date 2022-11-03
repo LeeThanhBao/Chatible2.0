@@ -1,0 +1,19 @@
+<h1>current user:{{ (currentUser$ | async)?.displayName }}</h1>
+
+<div *ngFor="let user of users$ | async">
+  <div *ngIf="currentUser$ | async as currUser">
+    <span>
+      <h1>{{ user.displayName }}</h1>
+      <p *ngIf="currUser.uid == user.uid">(You)</p>
+    </span>
+
+    <button
+      *ngIf="currUser.uid !== user.uid"
+      (click)="sendNotification(currUser, user)"
+    >
+      add friend
+    </button>
+  </div>
+</div>
+
+<button (click)="this.dialogRef.close()">close</button>

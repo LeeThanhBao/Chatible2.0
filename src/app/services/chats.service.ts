@@ -24,7 +24,7 @@ export class ChatsService {
   constructor(
     private firestore: Firestore,
     private usersService: UsersService
-  ) { }
+  ) {}
 
   get myChats$(): Observable<Chat[]> {
     const ref = collection(this.firestore, 'chats');
@@ -34,10 +34,13 @@ export class ChatsService {
           ref,
           where('userIds', 'array-contains', user?.uid)
         );
+        
         return collectionData(myQuery, { idField: 'id' }).pipe(
+          tap((data)=>console.log(data)),
           map((chats: any) => this.addChatNameAndPic(user?.uid, chats))
         ) as Observable<Chat[]>;
-      })
+      }),
+      // tap((user) => console.log(user))
     );
   }
 
@@ -98,16 +101,20 @@ export class ChatsService {
     );
   }
 
-  addFileMessage(chatId: string, link: String, name: String, type: Boolean): Observable<any> {
+  addFileMessage(
+    chatId: string,
+    link: String,
+    name: String,
+    type: Boolean
+  ): Observable<any> {
     let payload: any = {
-      image: link
-    }
+      image: link,
+    };
     if (!type) {
-      payload =
-      {
+      payload = {
         file: link,
-        fileName: name
-      }
+        fileName: name,
+      };
     }
     const ref = collection(this.firestore, 'chats', chatId, 'messages');
     const chatRef = doc(this.firestore, 'chats', chatId);
@@ -123,13 +130,13 @@ export class ChatsService {
       ),
       concatMap(() => {
         let lastMessage = 'send image';
-        if (!type) lastMessage = 'send file'
-        return updateDoc(chatRef, { lastMessage: lastMessage, lastMessageDate: today })
-      }
-
-      )
+        if (!type) lastMessage = 'send file';
+        return updateDoc(chatRef, {
+          lastMessage: lastMessage,
+          lastMessageDate: today,
+        });
+      })
     );
-
   }
 
   getChatMessages$(chatId: string): Observable<Message[]> {
