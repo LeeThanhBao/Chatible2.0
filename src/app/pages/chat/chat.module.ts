@@ -14,6 +14,8 @@ import { DatePipe } from '@angular/common';
 
 import { ChatRoutingModule } from './chat-routing.module';
 import { ChatComponent } from './chat.component';
+import { SearchDialogComponent } from './components/search-dialog/search-dialog.component';
+import { NotificationDialogComponent } from './components/notification-dialog/notification-dialog.component';
 
 // import { VideoCallComponent } from './components/video-call/video-call.component';
 
@@ -22,6 +24,8 @@ import { ChatComponent } from './chat.component';
   declarations: [
     ChatComponent,
     DateDisplayPipe,
+    SearchDialogComponent,
+    NotificationDialogComponent,
   ],
   imports: [
     CommonModule,

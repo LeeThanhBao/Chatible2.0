@@ -18,9 +18,10 @@
           </a>
         </li>
         <li class="list">
-          <a href="#" class="nav-link">
+          <a class="nav-link">
             <i class="bi bi-bell-fill icon"></i>
-            <span class="link">Notifications</span>
+            
+            <span *ngIf="(user$|async) as user" class="link" (click)="openNotificationDialog(user)">Notifications {{user.notification.length}}</span>
           </a>
         </li>
         <li class="list">
@@ -56,7 +57,11 @@
         <li class="list">
           <a class="nav-link">
             <i class="bi bi-microsoft icon"></i>
-            <input type="text" id="remoteId" placeholder="enter Id you want to call" />
+            <input
+              type="text"
+              id="remoteId"
+              placeholder="enter Id you want to call"
+            />
           </a>
         </li>
       </ul>
@@ -80,50 +85,77 @@
 </nav>
 
 <section class="overlay">
-
   <div class="friendlist">
     <div class="right-card-header">
       <span class="header-bold">Looking for someone?</span>
       <div class="searchbarcontainer">
         <form role="search" method="get" class="search-form form" action="">
+          <!-- <label>
+            <input
+              type="search"
+              class="search-field"
+              placeholder="Type something..."
+              [matAutocomplete]="users"
+              [formControl]="searchControl"
+            />
+          </label> -->
           <label>
-            <input type="search" class="search-field" placeholder="Type something..." [matAutocomplete]="users"
-              [formControl]="searchControl" />
+            <input
+              type="search"
+              class="search-field"
+              placeholder="Type something..."
+              [formControl]="searchControl"
+            />
           </label>
-
-          <mat-autocomplete #users="matAutocomplete">
-            <mat-option *ngFor="let user of users$ | async" [value]="''" (click)="createChat(user)">
+          
+          <!-- <mat-autocomplete #users="matAutocomplete">
+            <mat-option
+              *ngFor="let user of users$ | async"
+              [value]="''"
+              (click)="createChat(user)"
+            >
               {{ user.displayName }}
             </mat-option>
-          </mat-autocomplete>
-
-          <i class="bi bi-search search-submit button"></i>
+          </mat-autocomplete> -->
+          <div (click)="searchUser()">
+            <i class="bi bi-search search-submit button"></i>
+          </div>
+          
         </form>
       </div>
     </div>
 
     <mat-selection-list [multiple]="false" [formControl]="chatListControl">
-
       <mat-divider></mat-divider>
 
-      <mat-list-option style="width: 100%; height: 100%" *ngFor="let chat of myChats$ | async" [value]="chat.id">
-        <div style="display: flex; flex-direction: row;">
+      <mat-list-option
+        style="width: 100%; height: 100%"
+        *ngFor="let chat of myChats$ | async"
+        [value]="chat.id"
+      >
+        <div style="display: flex; flex-direction: row">
           <div style="display: flex; flex-direction: row">
-            <img class="friendlistavatar" [src]="chat.chatPic ? chat.chatPic : 'assets/images/avatar1.png'" />
+            <img
+              class="friendlistavatar"
+              [src]="chat.chatPic ? chat.chatPic : 'assets/images/avatar1.png'"
+            />
             <div style="display: flex; flex-direction: column">
-              <p class="chat-title"><span class="name-font">{{ chat.chatName }}</span></p>
+              <p class="chat-title">
+                <span class="name-font">{{ chat.chatName }}</span>
+              </p>
               <p class="chat-title">{{ chat.lastMessage }}</p>
             </div>
           </div>
-          <div style="margin-left: auto; margin-right: 0;">
-            <p class="chat-title"><span class="chat-date">{{ chat.lastMessageDate | dateDisplay }}</span></p>
+          <div style="margin-left: auto; margin-right: 0">
+            <p class="chat-title">
+              <span class="chat-date">{{
+                chat.lastMessageDate | dateDisplay
+              }}</span>
+            </p>
           </div>
         </div>
-
-
         <mat-divider></mat-divider>
       </mat-list-option>
-
     </mat-selection-list>
 
     <!-- <div class="right-card-body" [formControl]="chatListControl">
@@ -142,15 +174,31 @@
         </div>
       </div>
     </div> -->
-
   </div>
 
   <div class="chatarea" *ngIf="selectedChat$ | async as selectedChat">
-    <div class="left-header-container" *ngIf="selectedChat$ | async as selectedChat">
-      <img class="avatarChat" [src]="selectedChat.chatPic ? selectedChat.chatPic: 'assets/images/avatar1.png'" />
+    <div
+      class="left-header-container"
+      *ngIf="selectedChat$ | async as selectedChat"
+    >
+      <img
+        class="avatarChat"
+        [src]="
+          selectedChat.chatPic
+            ? selectedChat.chatPic
+            : 'assets/images/avatar1.png'
+        "
+      />
       <span class="header-bold">{{ selectedChat.chatName }}</span>
-      <div class="kebab-menu" style="font-size: 30px; display: flex; flex-direction: row; gap: 30px">
-        <i class="bi bi-telephone-forward-fill" id="btn-call" (click)="openWindow()"></i>
+      <div
+        class="kebab-menu"
+        style="font-size: 30px; display: flex; flex-direction: row; gap: 30px"
+      >
+        <i
+          class="bi bi-telephone-forward-fill"
+          id="btn-call"
+          (click)="openWindow()"
+        ></i>
         <i class="bi bi-camera-video-fill"></i>
         <i class="bi bi-list-ul"></i>
       </div>
@@ -161,28 +209,33 @@
     <div class="chat-area">
       <ng-container *ngIf="user$ | async as currentUser">
         <ng-container *ngIf="messages$ | async as messages">
-          <div class="chat-bubble-container" [ngClass]="{ sender: message.senderId === currentUser.uid }"
-            *ngFor="let message of messages">
-
+          <div
+            class="chat-bubble-container"
+            [ngClass]="{ sender: message.senderId === currentUser.uid }"
+            *ngFor="let message of messages"
+          >
             <div *ngIf="message.image" class="chat-bubble-img">
               <img [src]="message.image" class="imgChat" />
-              <span class="chat-time">{{message.sentDate | dateDisplay}}</span>
+              <span class="chat-time">{{
+                message.sentDate | dateDisplay
+              }}</span>
             </div>
 
             <div *ngIf="message.text" class="chat-bubble-message">
               {{ message.text }}
-              <span class="chat-time">{{message.sentDate | dateDisplay}}</span>
+              <span class="chat-time">{{
+                message.sentDate | dateDisplay
+              }}</span>
             </div>
-            
+
             <div *ngIf="message.file">
               <a [href]="message.file" [download]="message.fileName">
-
-                <h1>{{message.fileName}}</h1>
-
-              </a> 
-              <span class="chat-time">{{message.sentDate | dateDisplay}}</span>
+                <h1>{{ message.fileName }}</h1>
+              </a>
+              <span class="chat-time">{{
+                message.sentDate | dateDisplay
+              }}</span>
             </div>
-
           </div>
         </ng-container>
       </ng-container>
@@ -191,15 +244,18 @@
 
     <div class="input-area">
       <mat-form-field appearance="outline">
-        <input matInput placeholder="Enter your message..." [formControl]="messageControl"
-          (keydown.enter)="sendMessage()" />
+        <input
+          matInput
+          placeholder="Enter your message..."
+          [formControl]="messageControl"
+          (keydown.enter)="sendMessage()"
+        />
         <!-- <mat-icon matSuffix>sentiment_very_satisfied </mat-icon> -->
         <mat-icon matSuffix (click)="sendMessage()">send</mat-icon>
       </mat-form-field>
 
       <!-- image button -->
       <input type="file" (change)="uploadFile($event)" />
-
     </div>
   </div>
 </section>

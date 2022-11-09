@@ -25,6 +25,7 @@ export class ProfileComponent implements OnInit {
   lastName: new FormControl(''),
   phone: new FormControl(''),
   address: new FormControl(''),
+  notification:new FormControl([])
   });
 
   constructor(

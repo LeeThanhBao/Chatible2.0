@@ -1,0 +1,5 @@
+<div *ngFor="let user of data.notification; let i = index">
+  {{ user.name }}
+  <button (click)="accept(user,i)">accept</button>
+  <button (click)="deny(user,i)">deny</button>
+</div>
