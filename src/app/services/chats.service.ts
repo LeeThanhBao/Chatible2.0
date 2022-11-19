@@ -34,12 +34,12 @@ export class ChatsService {
           ref,
           where('userIds', 'array-contains', user?.uid)
         );
-        
+
         return collectionData(myQuery, { idField: 'id' }).pipe(
-          tap((data)=>console.log(data)),
+          tap(),
           map((chats: any) => this.addChatNameAndPic(user?.uid, chats))
         ) as Observable<Chat[]>;
-      }),
+      })
       // tap((user) => console.log(user))
     );
   }
