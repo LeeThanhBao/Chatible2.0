@@ -16,6 +16,8 @@ import { ChatRoutingModule } from './chat-routing.module';
 import { ChatComponent } from './chat.component';
 import { SearchDialogComponent } from './components/search-dialog/search-dialog.component';
 import { NotificationDialogComponent } from './components/notification-dialog/notification-dialog.component';
+import { MatProgressBarModule } from '@angular/material/progress-bar';
+import { MatToolbarModule } from '@angular/material/toolbar';
 
 // import { VideoCallComponent } from './components/video-call/video-call.component';
 
@@ -39,6 +41,8 @@ import { NotificationDialogComponent } from './components/notification-dialog/no
     MatListModule,
     MatFormFieldModule,
     MatInputModule,
+    MatProgressBarModule,
+    MatToolbarModule,
   ],
   providers: [DatePipe],
 })

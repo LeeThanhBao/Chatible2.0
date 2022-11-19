@@ -9,7 +9,7 @@ import {
   setDoc,
   updateDoc,
 } from '@angular/fire/firestore';
-import { take,from, fromEventPattern, Observable, of, switchMap } from 'rxjs';
+import { take, from, fromEventPattern, Observable, of, switchMap } from 'rxjs';
 import { ProfileUser } from '../models/user-profile';
 import { AuthenticationService } from './authentication.service';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
@@ -51,14 +51,15 @@ export class UsersService {
     return from(setDoc(ref, user));
   }
 
-  searchPhone$(phone: number) {
+  searchPhone$(phone: any) {
+    // console.log(phone);
     return this.db
-      .collection('users', (ref) => ref.where('phone', '>=', phone))
+      .collection('users', (ref) => ref.where('phone', '==', phone))
       .valueChanges();
   }
 
-  getUser(uid:string){
-    return this.db.collection('users').doc(uid).valueChanges().pipe(take(1))
+  getUser(uid: string) {
+    return this.db.collection('users').doc(uid).valueChanges().pipe(take(1));
   }
 
   sendNotification(from: any, to: any) {
@@ -78,50 +79,46 @@ export class UsersService {
     });
   }
 
-  denyFriendRequest(payload:any,userId:string){
+  denyFriendRequest(payload: any, userId: string) {
     // console.log(userId,payload)
     this.db.collection('users').doc(userId).update({
-      notification:payload
-    })
+      notification: payload,
+    });
   }
-  acceptFriendRequest(currentUser:any,user:any){
-    if(!currentUser.friends) currentUser.friends = []
-    if(!user.friends) user.friends = []
-    
+  acceptFriendRequest(currentUser: any, user: any) {
+    if (!currentUser.friends) currentUser.friends = [];
+    if (!user.friends) user.friends = [];
+
     currentUser.friends.push({
-      uid:user.uid,
-      type:'friend'
-    })
+      uid: user.uid,
+      type: 'friend',
+    });
     user.friends.push({
-      uid:currentUser.uid,
-      type:'friend'
-    })
+      uid: currentUser.uid,
+      type: 'friend',
+    });
     // console.log(currentUser,user)
     // console.log(currentUser)
     this.db.collection('users').doc(currentUser.uid).update({
-      friends:currentUser.friends
-    })
+      friends: currentUser.friends,
+    });
     this.db.collection('users').doc(user.uid).update({
-      friends:user.friends
-    })
-
+      friends: user.friends,
+    });
   }
 
   friendRequest(accept: boolean, currentUser: any, user: any, index: number) {
-    
     if (accept) {
-      let temp = {...currentUser.notification};
+      let temp = { ...currentUser.notification };
       // this.acceptFriendRequest(currentUser,user);
       currentUser.notification.splice(index, 1);
-      this.denyFriendRequest(currentUser.notification,currentUser.uid)
-      return {data:temp}
-    }else{
+      this.denyFriendRequest(currentUser.notification, currentUser.uid);
+      return { data: temp };
+    } else {
       currentUser.notification.splice(index, 1);
-      this.denyFriendRequest(currentUser.notification,currentUser.uid)
+      this.denyFriendRequest(currentUser.notification, currentUser.uid);
       return null;
-
     }
-    
 
     // user.notification
   }

@@ -20,8 +20,13 @@
         <li class="list">
           <a class="nav-link">
             <i class="bi bi-bell-fill icon"></i>
-            
-            <span *ngIf="(user$|async) as user" class="link" (click)="openNotificationDialog(user)">Notifications {{user.notification.length}}</span>
+
+            <span
+              *ngIf="user$ | async as user"
+              class="link"
+              (click)="openNotificationDialog(user)"
+              >Notifications {{ user.notification.length }}</span
+            >
           </a>
         </li>
         <li class="list">
@@ -107,7 +112,7 @@
               [formControl]="searchControl"
             />
           </label>
-          
+
           <!-- <mat-autocomplete #users="matAutocomplete">
             <mat-option
               *ngFor="let user of users$ | async"
@@ -120,7 +125,6 @@
           <div (click)="searchUser()">
             <i class="bi bi-search search-submit button"></i>
           </div>
-          
         </form>
       </div>
     </div>
@@ -237,6 +241,9 @@
               }}</span>
             </div>
           </div>
+          <mat-toolbar class="chat-bubble-container" *ngIf="isSending == true">
+            <mat-progress-bar mode="indeterminate"></mat-progress-bar
+          ></mat-toolbar>
         </ng-container>
       </ng-container>
       <div #endOfChat></div>
