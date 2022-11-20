@@ -1,0 +1,281 @@
+@import url("https://fonts.googleapis.com/css?family=Parisienne|Quicksand&display=swap");
+
+* {
+	margin: 0;
+	padding: 0;
+	box-sizing: border-box;
+	font-family: "Poppins", sans-serif;
+}
+body {
+	min-height: 100%;
+	background: #f4faff;
+}
+nav {
+	position: fixed;
+	top: 0;
+	left: 0;
+	height: 70px;
+	width: 100%;
+	display: flex;
+	align-items: center;
+	background: #fff;
+	box-shadow: 0 0 1px rgba(0, 0, 0, 0.1);
+	.logo {
+		display: flex;
+		align-items: center;
+		margin: auto;
+	}
+	.sidebar {
+		position: fixed;
+		top: 0;
+		left: 0;
+		height: 100%;
+		width: 260px;
+		padding: 60px 0;
+		background-color: #fff;
+		box-shadow: 0 5px 1px rgba(0, 0, 0, 0.1);
+		transition: all 0.4s ease;
+	}
+}
+.logo {
+	.menu-icon {
+		color: #333;
+		font-size: 24px;
+		margin-right: 14px;
+		cursor: pointer;
+	}
+	.logo-name {
+		font-family: "Parisienne", cursive;
+		color: #333;
+		font-size: 70px;
+		font-weight: 500;
+	}
+}
+nav.open {
+	.sidebar {
+		left: 0;
+	}
+	~ {
+		.overlay {
+			opacity: 1;
+			left: 260px;
+			pointer-events: auto;
+		}
+	}
+}
+.sidebar {
+	.sidebar-content {
+		display: flex;
+		height: 90vh;
+		flex-direction: column;
+		justify-content: space-between;
+		padding: 30px 16px;
+	}
+}
+.sidebar-content {
+	.list {
+		list-style: none;
+	}
+}
+.list {
+	.nav-link {
+		display: flex;
+		align-items: center;
+		margin: 8px 0;
+		padding: 14px 12px;
+		border-radius: 8px;
+		text-decoration: none;
+		transition: background-color 0.25s ease;
+		&:hover {
+			background-color: #f4406a;
+			.icon {
+				color: #fff;
+			}
+			.link {
+				color: #fff;
+			}
+		}
+	}
+}
+.lists {
+	.nav-link {
+		transition: background-color 0.25s ease;
+		&:hover {
+			background-color: #4070f4;
+			.icon {
+				color: #fff;
+			}
+			.link {
+				color: #fff;
+			}
+		}
+	}
+}
+.nav-link {
+	.icon {
+		margin-right: 14px;
+		font-size: 20px;
+		color: #707070;
+	}
+	.link {
+		font-size: 16px;
+		color: #707070;
+		font-weight: 400;
+	}
+}
+.overlay {
+	position: fixed;
+	top: 0;
+	left: 0;
+	height: 100vh;
+	width: 100vw;
+	opacity: 0;
+	pointer-events: none;
+	background-image: linear-gradient(
+		103.3deg,
+		rgba(252, 225, 208, 1) 30%,
+		rgba(255, 173, 214, 1) 55.7%,
+		rgba(162, 186, 245, 1) 81.8%
+	);
+	display: flex;
+	flex-direction: row;
+}
+
+.friendlist {
+	width: 85vw;
+	height: 95vh;
+	background-color: #fff;
+	border-radius: 20px;
+	padding: 10px;
+	position: absolute;
+    left: 15px;
+    top: 25px;
+}
+
+input {
+	border: 0;
+	outline: 0;
+	background-color: transparent;
+}
+
+.home__body {
+  margin-top: 100px;
+  width: 100%;
+  height: 100vh;
+  display: flex;
+  justify-content: space-between;
+  padding-top: 10px;
+  align-items: flex-start;
+
+
+  &__contentMiddle {
+    padding: 10px;
+    margin-left: 180px;
+    flex: 0.4;
+    width: 80%;
+    display: flex;
+    flex-direction: column;
+  
+    
+  
+    &__center {
+      padding: 0 10px;
+      min-height: 20px;
+      width: 100%;
+      align-self: center;
+      margin-top: 30px;
+      display: flex;
+      flex-direction: column;
+      gap:20px;
+  
+      mat-card.post-message {
+        border-radius: 10px;
+        display: flex;
+        flex-direction: column;
+  
+  
+        .post-message-header {
+          width:100%;
+          display: flex;
+          align-items: center;
+  
+          form {
+            flex:1;
+          }
+  
+          form > input.on-your-mind {
+            background-color: #F0F2F5;
+            display: inline-block;
+            outline: none;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 20px;
+            width: 100%;
+            font-size: 16px;
+          }
+        }
+  
+  
+  
+  
+        .card-body {
+          align-self: center;
+          display: flex;
+          justify-content: center;
+          padding: 10px 40px;
+          width: 90%;
+          margin-top: 10px;
+          align-items: center;
+  
+          div {
+            display: flex;
+            align-items: center;
+            height: 100%;
+            width: 100%;
+            gap: 15px;
+  
+            // mat-icon {
+            //   font-size: xx-large;
+            // }
+  
+            span {
+              font-size: 16px;
+            }
+          }
+        }
+      }
+  
+      mat-card.posts {
+  
+        .posts__header {
+          display:flex;
+  
+          // img {
+  
+          // }
+  
+          .posts__header__right {
+            display: flex;
+            flex-direction: column-reverse;
+  
+            h3 {
+              font-weight: 600;
+              font-size: 15px;
+              text-transform: capitalize;
+              margin-bottom: 0;
+            }
+          }
+  
+  
+        }
+  
+        .posts__body {
+          margin-top: 10px;
+        }
+      }
+    }
+  
+  
+  } 
+}
+

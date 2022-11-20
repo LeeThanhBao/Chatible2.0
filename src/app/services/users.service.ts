@@ -51,7 +51,7 @@ export class UsersService {
     return from(setDoc(ref, user));
   }
 
-  searchPhone$(phone: number) {
+  searchPhone$(phone: string) {
     return this.db
       .collection('users', (ref) => ref.where('phone', '>=', phone))
       .valueChanges();

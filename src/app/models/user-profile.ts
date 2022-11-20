@@ -7,5 +7,6 @@ export interface ProfileUser {
   lastName?: string;
   phone?: string;
   address?: string;
-  notification?:any
+  notification?:any;
+  friends?: [];
 }
