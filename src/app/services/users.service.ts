@@ -52,7 +52,6 @@ export class UsersService {
   }
 
   searchPhone$(phone: any) {
-    // console.log(phone);
     return this.db
       .collection('users', (ref) => ref.where('phone', '==', phone))
       .valueChanges();

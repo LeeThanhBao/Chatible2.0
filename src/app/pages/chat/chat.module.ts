@@ -19,6 +19,8 @@ import { NotificationDialogComponent } from './components/notification-dialog/no
 import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { MatToolbarModule } from '@angular/material/toolbar';
 
+import  {  NgxEmojiPickerModule  }  from  'ngx-emoji-picker';
+
 // import { VideoCallComponent } from './components/video-call/video-call.component';
 
 @NgModule({
@@ -43,6 +45,7 @@ import { MatToolbarModule } from '@angular/material/toolbar';
     MatInputModule,
     MatProgressBarModule,
     MatToolbarModule,
+    NgxEmojiPickerModule,
   ],
   providers: [DatePipe],
 })
