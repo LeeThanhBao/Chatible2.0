@@ -141,6 +141,9 @@ export class ChatComponent implements OnInit {
   searchControl = new FormControl('');
   messageControl = new FormControl('');
   chatListControl = new FormControl('');
+  emoji: String = '';
+  //public textArea: string = '';
+  public isEmojiPickerVisible!: boolean;
 
   messages$: Observable<Message[]> | undefined;
 
@@ -196,7 +199,10 @@ export class ChatComponent implements OnInit {
     //   console.log(data);
     // })
   }
-
+  public addEmoji(event: any) {
+    this.emoji = `${this.emoji}${event.emoji.native}`;
+    this.isEmojiPickerVisible = false;
+  }
   createChat(user: ProfileUser) {
     this.chatsService
       .isExistingChat(user.uid)

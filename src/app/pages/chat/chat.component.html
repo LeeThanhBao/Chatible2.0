@@ -252,6 +252,7 @@
     <div class="input-area">
       <mat-form-field appearance="outline">
         <input
+          [(ngModel)]="emoji"
           matInput
           placeholder="Enter your message..."
           [formControl]="messageControl"
@@ -259,6 +260,17 @@
         />
         <!-- <mat-icon matSuffix>sentiment_very_satisfied </mat-icon> -->
         <mat-icon matSuffix (click)="sendMessage()">send</mat-icon>
+        <div class="emoji-container">
+          <button (click)="isEmojiPickerVisible = !isEmojiPickerVisible">
+            😀
+          </button>
+        </div>
+        <emoji-mart
+          (emojiSelect)="addEmoji($event)"
+          class="emoji-mart"
+          *ngIf="isEmojiPickerVisible"
+          title="Choose your emoji"
+        ></emoji-mart>
       </mat-form-field>
 
       <!-- image button -->

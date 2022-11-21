@@ -18,6 +18,8 @@ import { SearchDialogComponent } from './components/search-dialog/search-dialog.
 import { NotificationDialogComponent } from './components/notification-dialog/notification-dialog.component';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { MatToolbarModule } from '@angular/material/toolbar';
+// import { PickerModule } from '@ctrl/ngx-emoji-mart';
+import { PickerModule } from '@ctrl/ngx-emoji-mart';
 
 // import { VideoCallComponent } from './components/video-call/video-call.component';
 
@@ -30,6 +32,7 @@ import { MatToolbarModule } from '@angular/material/toolbar';
     NotificationDialogComponent,
   ],
   imports: [
+    PickerModule,
     CommonModule,
     ChatRoutingModule,
     MatDialogModule,
