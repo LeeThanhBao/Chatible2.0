@@ -4,7 +4,7 @@
   <div *ngIf="currentUser$ | async as currUser">
     <span>
       <h1>{{ user.displayName }}</h1>
-      <p *ngIf="currUser.uid == user.uid">(You)</p>
+      <!-- <p *ngIf="currUser.uid == user.uid">(You)</p> -->
     </span>
 
     <button

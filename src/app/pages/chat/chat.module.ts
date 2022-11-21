@@ -16,6 +16,12 @@ import { ChatRoutingModule } from './chat-routing.module';
 import { ChatComponent } from './chat.component';
 import { SearchDialogComponent } from './components/search-dialog/search-dialog.component';
 import { NotificationDialogComponent } from './components/notification-dialog/notification-dialog.component';
+import { MatProgressBarModule } from '@angular/material/progress-bar';
+import { MatToolbarModule } from '@angular/material/toolbar';
+// import { PickerModule } from '@ctrl/ngx-emoji-mart';
+import { PickerModule } from '@ctrl/ngx-emoji-mart';
+
+import  {  NgxEmojiPickerModule  }  from  'ngx-emoji-picker';
 
 // import { VideoCallComponent } from './components/video-call/video-call.component';
 
@@ -28,6 +34,7 @@ import { NotificationDialogComponent } from './components/notification-dialog/no
     NotificationDialogComponent,
   ],
   imports: [
+    PickerModule,
     CommonModule,
     ChatRoutingModule,
     MatDialogModule,
@@ -39,6 +46,9 @@ import { NotificationDialogComponent } from './components/notification-dialog/no
     MatListModule,
     MatFormFieldModule,
     MatInputModule,
+    MatProgressBarModule,
+    MatToolbarModule,
+    NgxEmojiPickerModule,
   ],
   providers: [DatePipe],
 })

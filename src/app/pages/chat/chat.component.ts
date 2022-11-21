@@ -136,10 +136,14 @@ export class ChatComponent implements OnInit {
 
   user$ = this.usersService.currentUserProfile$;
   myChats$ = this.chatsService.myChats$;
+  isSending: boolean = false;
 
   searchControl = new FormControl('');
   messageControl = new FormControl('');
   chatListControl = new FormControl('');
+  emoji: String = '';
+  //public textArea: string = '';
+  public isEmojiPickerVisible!: boolean;
 
   messages$: Observable<Message[]> | undefined;
 
@@ -172,12 +176,7 @@ export class ChatComponent implements OnInit {
     private diaLog: MatDialog,
     public data: DataService,
     public uploadSer: ImageUploadService
-  ) {}
-
-  ngOnInit(): void {
-    this.data.getAllUser().subscribe((data) => {
-      this.users = data;
-    });
+  ) {
     this.messages$ = this.chatListControl.valueChanges.pipe(
       map((value) => value[0]),
       switchMap((chatId) => this.chatsService.getChatMessages$(chatId)),
@@ -186,16 +185,24 @@ export class ChatComponent implements OnInit {
         console.log(data);
       })
     );
+  }
+
+  ngOnInit(): void {
+    this.data.getAllUser().subscribe((data) => {
+      this.users = data;
+    });
 
     this.currentUser$.subscribe((data: any) => {
       this.user = data;
-      
     });
     // this.users$.subscribe((data)=>{
     //   console.log(data);
     // })
   }
-
+  public addEmoji(event: any) {
+    this.emoji = `${this.emoji}${event.emoji.native}`;
+    this.isEmojiPickerVisible = false;
+  }
   createChat(user: ProfileUser) {
     this.chatsService
       .isExistingChat(user.uid)
@@ -213,30 +220,35 @@ export class ChatComponent implements OnInit {
       });
   }
 
-  openNotificationDialog(user:any){
-    const dialogRef = this.diaLog.open(NotificationDialogComponent,{
+  openNotificationDialog(user: any) {
+    const dialogRef = this.diaLog.open(NotificationDialogComponent, {
       width: '90%',
       data: user,
-    })
-    dialogRef.afterClosed().subscribe((res)=>{
-      let result = this.usersService.friendRequest(res.accept,res.currentUser,res.user,res.userIndex)
-      if(result){
-        this.usersService.getUser(res.user.from).subscribe((data:any)=>{
-          this.createChat(data)
-          this.usersService.acceptFriendRequest(user,data)
-        })
+    });
+    dialogRef.afterClosed().subscribe((res) => {
+      let result = this.usersService.friendRequest(
+        res.accept,
+        res.currentUser,
+        res.user,
+        res.userIndex
+      );
+      if (result) {
+        this.usersService.getUser(res.user.from).subscribe((data: any) => {
+          this.createChat(data);
+          this.usersService.acceptFriendRequest(user, data);
+        });
       }
-    })
+    });
   }
 
   searchUser() {
     let result = this.searchControl.value;
     const dialogRef = this.diaLog.open(SearchDialogComponent, {
       width: '90%',
-      data: { keyword: result },
+      data: { result },
     });
     dialogRef.afterClosed().subscribe(() => {
-      this.searchControl.setValue('')
+      this.searchControl.setValue('');
     });
     // console.log(result);
   }
@@ -261,6 +273,7 @@ export class ChatComponent implements OnInit {
     }, 100);
   }
   async uploadFile(event: any) {
+    this.isSending = true;
     let name = event.target.files[0].name;
     let type = event.target.files[0].type;
     let regex = new RegExp(/image/g);
@@ -287,7 +300,7 @@ export class ChatComponent implements OnInit {
         })
       )
       .subscribe((res: any) => {
-        console.log(res);
+        this.isSending = false;
       });
   }
 
