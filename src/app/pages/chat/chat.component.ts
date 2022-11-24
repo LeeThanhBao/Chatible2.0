@@ -1,15 +1,7 @@
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { Router } from '@angular/router';
-import {
-  combineLatest,
-  map,
-  Observable,
-  of,
-  startWith,
-  switchMap,
-  tap,
-} from 'rxjs';
+import { combineLatest, map, Observable, of, startWith, switchMap, tap } from 'rxjs';
 import { DomSanitizer } from '@angular/platform-browser';
 
 import { MatDialog, MAT_DIALOG_DATA } from '@angular/material/dialog';
@@ -199,10 +191,12 @@ export class ChatComponent implements OnInit {
     //   console.log(data);
     // })
   }
+
   public addEmoji(event: any) {
     this.emoji = `${this.emoji}${event.emoji.native}`;
     this.isEmojiPickerVisible = false;
   }
+
   createChat(user: ProfileUser) {
     this.chatsService
       .isExistingChat(user.uid)
@@ -244,7 +238,7 @@ export class ChatComponent implements OnInit {
   searchUser() {
     let result = this.searchControl.value;
     const dialogRef = this.diaLog.open(SearchDialogComponent, {
-      width: '90%',
+      // width: '50%',
       data: { result },
     });
     dialogRef.afterClosed().subscribe(() => {
@@ -252,6 +246,7 @@ export class ChatComponent implements OnInit {
     });
     // console.log(result);
   }
+
   sendMessage() {
     const message = this.messageControl.value;
     const selectedChatId = this.chatListControl.value[0];
@@ -272,6 +267,7 @@ export class ChatComponent implements OnInit {
       }
     }, 100);
   }
+
   async uploadFile(event: any) {
     this.isSending = true;
     let name = event.target.files[0].name;

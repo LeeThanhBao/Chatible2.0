@@ -1,19 +1,38 @@
-<h1>current user:{{ (currentUser$ | async)?.displayName }}</h1>
+<div class="box">
+  <div class="header">
+    <h1>You're logged in as: <strong>{{ (currentUser$ | async)?.displayName }}</strong></h1>
+  </div>
 
-<div *ngFor="let user of users$ | async">
-  <div *ngIf="currentUser$ | async as currUser">
-    <span>
-      <h1>{{ user.displayName }}</h1>
-      <!-- <p *ngIf="currUser.uid == user.uid">(You)</p> -->
-    </span>
+  <div *ngFor="let user of users$ | async" class="content">
+    <div *ngIf="currentUser$ | async as currUser" class="usercontainer">
+      <span>
+        <p>{{ user.displayName }}</p>
+        <p>({{ user.phone }})</p>
+        <p *ngIf="currUser.uid == user.uid">(You)</p>
+      </span>
 
-    <button
-      *ngIf="currUser.uid !== user.uid"
-      (click)="sendNotification(currUser, user)"
-    >
-      add friend
-    </button>
+      <button class="button add" *ngIf="currUser.uid !== user.uid" (click)="sendNotification(currUser, user)">
+        Add Friend
+      </button>
+    </div>
+  </div>
+
+  <div class="buttoncontainer">
+    <button class="button close" (click)="this.dialogRef.close()">X</button>
   </div>
 </div>
 
-<button (click)="this.dialogRef.close()">close</button>
+<!-- <div class="box">
+    <div class="header">
+        <h1>Heading</h1>
+    </div>
+    <div class="content">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Distinctio cum atque
+        consequatur id quis commodi ipsum mollitia dolore, voluptas tempora? Blanditiis, cumque? Consequatur
+        ullam quia error repudiandae aliquam ipsa harum.
+        <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Hic tempora sed, aliquam exercitationem minima dolore aut blanditiis dolor in fugit molestiae. Impedit aspernatur quod rerum rem labore perspiciatis repellendus.</p>
+    </div>
+    <div class="buttons">
+        <div class="button cancel">Cancel</div>
+        <div class="button ok">OK</div>
+    </div>
+  </div> -->

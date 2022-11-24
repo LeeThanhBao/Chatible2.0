@@ -1,9 +1,5 @@
 import { Component, Inject, OnInit } from '@angular/core';
-import {
-  MatDialog,
-  MatDialogRef,
-  MAT_DIALOG_DATA,
-} from '@angular/material/dialog';
+import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { Observable } from 'rxjs';
 import { UsersService } from 'src/app/services/users.service';
 
@@ -15,6 +11,7 @@ import { UsersService } from 'src/app/services/users.service';
 export class SearchDialogComponent implements OnInit {
   public users$!: Observable<any>;
   public currentUser$: Observable<any>;
+
   constructor(
     public dialogRef: MatDialogRef<SearchDialogComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any,
@@ -26,11 +23,12 @@ export class SearchDialogComponent implements OnInit {
     // });
     this.currentUser$ = this.userSer.currentUserProfile$;
   }
+
   sendNotification(fromUser: any, toUser: any) {
     let result = fromUser.friends.findIndex(
       (currUser: any) => currUser.uid == toUser.uid
     );
-    if (result == 0) alert('already friend');
+    if (result == 0) alert('Already added');
     else {
       this.userSer.sendNotification(fromUser, toUser);
       this.dialogRef.close();
@@ -38,5 +36,5 @@ export class SearchDialogComponent implements OnInit {
     // console.log(result);
   }
 
-  ngOnInit(): void {}
+  ngOnInit(): void { }
 }

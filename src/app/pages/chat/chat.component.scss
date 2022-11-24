@@ -322,7 +322,6 @@ input.search-submit {
 	font-style: italic;
 	grid-gap: 5px;
 }
-
 .bubble:after {
 	content: "";
 	background-color: red;
@@ -334,7 +333,6 @@ input.search-submit {
 	top: 1px;
 	left: 1px;
 }
-
 .bubble .bubble-outer-dot {
 	margin: 1px;
 	display: block;
@@ -416,11 +414,6 @@ input.search-submit {
 	margin-top: 40px;
 	margin-left: 1vw;
 }
-.header-bold {
-	font-size: 30px;
-	font-weight: bold;
-	color: #22215b;
-}
 .left-header-container {
 	display: flex;
 	justify-content: space-between;
@@ -497,7 +490,6 @@ input {
 		background-color: #ffb300;
 	}
 }
-
 .left-footer-container {
 	display: flex;
 	align-items: flex-end;
@@ -513,26 +505,25 @@ input {
 	margin: 16px 16px 16px 10px;
 	object-fit: cover;
 }
-
 .profile-image-toolbar {
 	width: 100;
 	height: 100;
 	border-radius: 100%;
 	border: #212121 1px solid;
 }
-.kebab-menu{
-	font-size: 30px; 
-	display: flex; 
-	flex-direction: row; 
-	gap: 30px
+.kebab-menu {
+	font-size: 30px;
+	display: flex;
+	flex-direction: row;
+	gap: 30px;
 }
 //KẾT THÚC CHAT AREA
 
 //PHẦN MỚI NHẤT
-@import 'https://fonts.googleapis.com/icon?family=Material+Icons';
+@import "https://fonts.googleapis.com/icon?family=Material+Icons";
 .container {
-    display: flex;
-    height: calc(100vh - 70px);
+	display: flex;
+	height: calc(100vh - 70px);
 }
 .chat-list {
 	width: 40%;
@@ -543,14 +534,14 @@ input {
 .chat-title {
 	display: flex;
 	justify-content: space-between;
-	margin: 10px
+	margin: 10px;
 }
 .chat-name {
 	font-weight: 500;
 }
 .chat-date {
 	font-size: 0.7rem;
-	color: rgba(0,0,0,0.7)
+	color: rgba(0, 0, 0, 0.7);
 }
 .search-input {
 	margin: 24px;
@@ -561,7 +552,7 @@ input {
 	margin: 16px;
 	margin-left: 8px;
 	border-radius: 16px;
-	background: rgba(0,0,0,0.05);
+	background: rgba(0, 0, 0, 0.05);
 }
 .messages-header {
 	display: flex;
@@ -576,7 +567,7 @@ input {
 }
 h2 {
 	margin: 0;
- }
+}
 .chat-area {
 	height: calc(85vh - 270px);
 	display: flex;
@@ -590,7 +581,7 @@ h2 {
 .chat-bubble-container {
 	display: flex;
 	width: 100%;
-	justify-content: flex-start;                
+	justify-content: flex-start;
 }
 .chat-bubble-message {
 	background: #c5cae9;
@@ -615,7 +606,7 @@ h2 {
 	bottom: 2px;
 	right: 8px;
 	font-size: 0.7rem;
-	color: rgba(0,0,0,0.6);
+	color: rgba(0, 0, 0, 0.6);
 }
 .chat-bubble-container.sender {
 	justify-content: flex-end;
@@ -625,22 +616,39 @@ h2 {
 	padding-bottom: 8px;
 }
 mat-form-field {
-    width: 100%;
+	width: 100%;
 }
 //KẾT THÚC PHẦN MỚI NHẤT
+
+//EMOJI
 .emoji-container {
 	display: grid;
 	grid-template-columns: 100% 0%;
 	width: 36%;
-
 	button {
 		background: transparent;
 		border: 0;
 		transform: translateX(-40px);
 		cursor: pointer;
-
 		&:focus {
 			outline: 0;
 		}
 	}
 }
+//KẾT THÚC EMOJI
+
+.sidebar-card {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	font-size: 15px;
+	border-radius: 0.35rem;
+	color: #707070;
+	// margin-left: 1rem;
+	// margin-right: 1rem;
+	// margin-bottom: 1rem;
+	margin: 1rem;
+	padding: 1rem;
+	background-color: rgba(0, 0, 0, 0.1);
+	text-align: center;
+  }

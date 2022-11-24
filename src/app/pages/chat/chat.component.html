@@ -12,6 +12,12 @@
     <div class="sidebar-content">
       <ul class="lists">
         <li class="list">
+          <div class="sidebar-card">
+            <p>You're logged in as: </p>
+            <strong>[USER'S NAME HERE]</strong>
+          </div>
+        </li>
+        <li class="list">
           <a href="./profile" class="nav-link">
             <i class="bi bi-body-text icon"></i>
             <span class="link">Profile</span>
@@ -21,12 +27,8 @@
           <a class="nav-link">
             <i class="bi bi-bell-fill icon"></i>
 
-            <span
-              *ngIf="user$ | async as user"
-              class="link"
-              (click)="openNotificationDialog(user)"
-              >Notifications {{ user.notification.length }}</span
-            >
+            <span *ngIf="user$ | async as user" class="link" (click)="openNotificationDialog(user)">Notifications {{
+              user.notification.length }}</span>
           </a>
         </li>
         <li class="list">
@@ -62,11 +64,7 @@
         <li class="list">
           <a class="nav-link">
             <i class="bi bi-microsoft icon"></i>
-            <input
-              type="text"
-              id="remoteId"
-              placeholder="enter Id you want to call"
-            />
+            <input type="text" id="remoteId" placeholder="enter Id you want to call" />
           </a>
         </li>
       </ul>
@@ -95,33 +93,9 @@
       <span class="header-bold">Looking for someone?</span>
       <div class="searchbarcontainer">
         <form role="search" method="get" class="search-form form" action="">
-          <!-- <label>
-            <input
-              type="search"
-              class="search-field"
-              placeholder="Type something..."
-              [matAutocomplete]="users"
-              [formControl]="searchControl"
-            />
-          </label> -->
           <label>
-            <input
-              type="search"
-              class="search-field"
-              placeholder="Type something..."
-              [formControl]="searchControl"
-            />
+            <input type="search" class="search-field" placeholder="Type something..." [formControl]="searchControl" />
           </label>
-
-          <!-- <mat-autocomplete #users="matAutocomplete">
-            <mat-option
-              *ngFor="let user of users$ | async"
-              [value]="''"
-              (click)="createChat(user)"
-            >
-              {{ user.displayName }}
-            </mat-option>
-          </mat-autocomplete> -->
           <div (click)="searchUser()">
             <i class="bi bi-search search-submit button"></i>
           </div>
@@ -132,17 +106,10 @@
     <mat-selection-list [multiple]="false" [formControl]="chatListControl">
       <mat-divider></mat-divider>
 
-      <mat-list-option
-        style="width: 100%; height: 100%"
-        *ngFor="let chat of myChats$ | async"
-        [value]="chat.id"
-      >
+      <mat-list-option style="width: 100%; height: 100%" *ngFor="let chat of myChats$ | async" [value]="chat.id">
         <div style="display: flex; flex-direction: row">
           <div style="display: flex; flex-direction: row">
-            <img
-              class="friendlistavatar"
-              [src]="chat.chatPic ? chat.chatPic : 'assets/images/avatar1.png'"
-            />
+            <img class="friendlistavatar" [src]="chat.chatPic ? chat.chatPic : 'assets/images/avatar1.png'" />
             <div style="display: flex; flex-direction: column">
               <p class="chat-title">
                 <span class="name-font">{{ chat.chatName }}</span>
@@ -154,55 +121,21 @@
             <p class="chat-title">
               <span class="chat-date">{{
                 chat.lastMessageDate | dateDisplay
-              }}</span>
+                }}</span>
             </p>
           </div>
         </div>
         <mat-divider></mat-divider>
       </mat-list-option>
     </mat-selection-list>
-
-    <!-- <div class="right-card-body" [formControl]="chatListControl">
-      <div class="right-card-body-container">
-        <div class="card" (click)="onclickUser(chatUser.uid)">
-          <div class="profile">
-            <div>
-              <img class="avatar" [src]="chat.chatPic ? chat.chatPic : 'assets/images/avatar1.png'"/>
-            </div>
-            <div class="profile-info">
-              <span class="name-font">{{ chat.chatName }}</span>
-              <span class="chat-date">{{ chat.lastMessageDate | dateDisplay}}</span>
-              <span class="job-font"><p mat-line>{{ chat.lastMessage }}</p></span>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div> -->
   </div>
 
   <div class="chatarea" *ngIf="selectedChat$ | async as selectedChat">
-    <div
-      class="left-header-container"
-      *ngIf="selectedChat$ | async as selectedChat"
-    >
-      <img
-        class="avatarChat"
-        [src]="
-          selectedChat.chatPic
-            ? selectedChat.chatPic
-            : 'assets/images/avatar1.png'
-        "
-      />
+    <div class="left-header-container" *ngIf="selectedChat$ | async as selectedChat">
+      <img class="avatarChat" [src]="selectedChat.chatPic ? selectedChat.chatPic: 'assets/images/avatar1.png'"/>
       <span class="header-bold">{{ selectedChat.chatName }}</span>
-      <div
-        class="kebab-menu"
-        style="font-size: 30px; display: flex; flex-direction: row; gap: 30px"
-      >
-        <i
-          class="bi bi-telephone-forward-fill"
-          id="btn-call"
-          (click)="openWindow()"
-        ></i>
+      <div class="kebab-menu" style="font-size: 30px; display: flex; flex-direction: row; gap: 30px">
+        <i class="bi bi-telephone-forward-fill" id="btn-call" (click)="openWindow()"></i>
         <i class="bi bi-camera-video-fill"></i>
         <i class="bi bi-list-ul"></i>
       </div>
@@ -213,37 +146,28 @@
     <div class="chat-area">
       <ng-container *ngIf="user$ | async as currentUser">
         <ng-container *ngIf="messages$ | async as messages">
-          <div
-            class="chat-bubble-container"
-            [ngClass]="{ sender: message.senderId === currentUser.uid }"
-            *ngFor="let message of messages"
-          >
+          <div class="chat-bubble-container" [ngClass]="{ sender: message.senderId === currentUser.uid }"
+            *ngFor="let message of messages">
             <div *ngIf="message.image" class="chat-bubble-img">
               <img [src]="message.image" class="imgChat" />
-              <span class="chat-time">{{
-                message.sentDate | dateDisplay
-              }}</span>
+              <span class="chat-time">{{message.sentDate | dateDisplay}}</span>
             </div>
 
             <div *ngIf="message.text" class="chat-bubble-message">
               {{ message.text }}
-              <span class="chat-time">{{
-                message.sentDate | dateDisplay
-              }}</span>
+              <span class="chat-time">{{message.sentDate | dateDisplay}}</span>
             </div>
 
             <div *ngIf="message.file">
               <a [href]="message.file" [download]="message.fileName">
                 <h1>{{ message.fileName }}</h1>
               </a>
-              <span class="chat-time">{{
-                message.sentDate | dateDisplay
-              }}</span>
+              <span class="chat-time">{{message.sentDate | dateDisplay}}</span>
             </div>
           </div>
           <mat-toolbar class="chat-bubble-container" *ngIf="isSending == true">
-            <mat-progress-bar mode="indeterminate"></mat-progress-bar
-          ></mat-toolbar>
+            <mat-progress-bar mode="indeterminate"></mat-progress-bar>
+          </mat-toolbar>
         </ng-container>
       </ng-container>
       <div #endOfChat></div>
@@ -251,30 +175,25 @@
 
     <div class="input-area">
       <mat-form-field appearance="outline">
-        <input
-          [(ngModel)]="emoji"
-          matInput
-          placeholder="Enter your message..."
-          [formControl]="messageControl"
-          (keydown.enter)="sendMessage()"
-        />
+        <input [(ngModel)]="emoji" matInput placeholder="Enter your message..." [formControl]="messageControl"
+          (keydown.enter)="sendMessage()" />
+
         <!-- <mat-icon matSuffix>sentiment_very_satisfied </mat-icon> -->
         <mat-icon matSuffix (click)="sendMessage()">send</mat-icon>
-        <div class="emoji-container">
-          <button (click)="isEmojiPickerVisible = !isEmojiPickerVisible">
-            😀
-          </button>
-        </div>
-        <emoji-mart
-          (emojiSelect)="addEmoji($event)"
-          class="emoji-mart"
-          *ngIf="isEmojiPickerVisible"
-          title="Choose your emoji"
-        ></emoji-mart>
+
       </mat-form-field>
 
       <!-- image button -->
       <input type="file" (change)="uploadFile($event)" />
+      <div class="emoji-container">
+        <button (click)="isEmojiPickerVisible = !isEmojiPickerVisible">
+          😀
+        </button>
+      </div>
+      <emoji-mart (emojiSelect)="addEmoji($event)" class="emoji-mart" *ngIf="isEmojiPickerVisible"
+        title="Choose your emoji">
+      </emoji-mart>
+
     </div>
   </div>
 </section>
