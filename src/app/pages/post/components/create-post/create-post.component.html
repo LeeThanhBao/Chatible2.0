@@ -17,7 +17,7 @@
       <div class="wrapper">
         <section class="post">
           <header>Create Post</header>
-          <form action="#">
+          <form #form="ngForm" (ngSubmit)="postMessage(form)">
             <div class="content">
               <img src="../../../../../assets/images/logo.png" alt="logo" />
               <div class="details">
@@ -30,6 +30,8 @@
               </div>
             </div>
             <textarea
+              name="message"
+              ngModel
               placeholder="What's on your mind ?"
               spellcheck="false"
               required
@@ -73,7 +75,7 @@
                 </li>
               </ul>
             </div>
-            <button>Post</button>
+            <button type="submit">Post</button>
           </form>
         </section>
         <section class="audience">

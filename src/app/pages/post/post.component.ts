@@ -43,23 +43,24 @@ export class PostComponent implements OnInit {
 
   openCreatePost() {
     const dialogRef = this.dialog.open(CreatePostComponent, {
-      data: { postingUser: this.user },
+      data: this.user,
       panelClass: 'custom-dialog-container',
     });
+    //console.log(this.user);
   }
 
-  postMessage(form: NgForm): void {
-    const { message } = form.value;
+  // postMessage(form: NgForm): void {
+  //   const { message } = form.value;
 
-    console.log(this.user);
-    // this.postService.postMessage(message, `${this.user.firstName} ${this.user.lastName}`,{
-    //   photoURL: this.user.photoURL,
-    //   lastName: this.user.lastName,
-    //   firstName: this.user.firstName
-    // })
-    this.postService.postMessage(message, this.user);
-    form.resetForm();
-  }
+  //   console.log(this.user);
+  //   // this.postService.postMessage(message, `${this.user.firstName} ${this.user.lastName}`,{
+  //   //   photoURL: this.user.photoURL,
+  //   //   lastName: this.user.lastName,
+  //   //   firstName: this.user.firstName
+  //   // })
+  //   this.postService.postMessage(message, this.user);
+  //   form.resetForm();
+  // }
 
   logout() {
     this.authService.logout().subscribe(() => {
