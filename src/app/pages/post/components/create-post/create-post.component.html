@@ -13,7 +13,7 @@
     />
   </head>
   <body>
-    <div class="container">
+    <div mat-dialog-content class="container">
       <div class="wrapper">
         <section class="post">
           <header>Create Post</header>
@@ -36,6 +36,12 @@
               spellcheck="false"
               required
             ></textarea>
+            <img
+              *ngFor="let url of imageSrc"
+              [src]="url"
+              width="100px"
+              height="100px"
+            />
             <div class="theme-emoji">
               <img src="../../../../../assets/images/theme.svg" alt="theme" />
               <img src="../../../../../assets/images/smile.svg" alt="smile" />
@@ -44,10 +50,16 @@
               <p>Add to Your Post</p>
               <ul class="list">
                 <li>
-                  <img
-                    src="../../../../../assets/images/gallery.svg"
-                    alt="gallery"
-                  />
+                  <label style="display: flex; justify-content: center">
+                    <input
+                      class="file"
+                      type="file"
+                      (change)="readURL($event)"
+                      accept="image/png, image/gif, image/jpeg" />
+                    <img
+                      src="../../../../../assets/images/gallery.svg"
+                      alt="image"
+                  /></label>
                 </li>
                 <li>
                   <img
