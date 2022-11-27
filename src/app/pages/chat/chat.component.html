@@ -146,24 +146,31 @@
     <div class="chat-area">
       <ng-container *ngIf="user$ | async as currentUser">
         <ng-container *ngIf="messages$ | async as messages">
-          <div class="chat-bubble-container" [ngClass]="{ sender: message.senderId === currentUser.uid }"
-            *ngFor="let message of messages">
-            <div *ngIf="message.image" class="chat-bubble-img">
-              <img [src]="message.image" class="imgChat" />
-              <span class="chat-time">{{message.sentDate | dateDisplay}}</span>
-            </div>
-
+          <div class="chat-bubble-container" [ngClass]="{ sender: message.senderId === currentUser.uid }" *ngFor="let message of messages">
+            <!-- TEXT -->
             <div *ngIf="message.text" class="chat-bubble-message">
               {{ message.text }}
               <span class="chat-time">{{message.sentDate | dateDisplay}}</span>
             </div>
 
-            <div *ngIf="message.file">
+            <!-- IMG -->
+            <div *ngIf="message.image" class="chat-bubble-img">
+              <div class="downloadbtncontainer">
+                <a href={{message.image}} target="_blank" class="downloadbtn bi-arrows-angle-expand"></a>
+              </div>
+              <img [src]="message.image" class="imgChat"/>
+              
+              <span class="chat-time">{{message.sentDate | dateDisplay}}</span>
+            </div>
+
+            <!-- FILE -->
+            <div *ngIf="message.file" class="chat-bubble-message">
               <a [href]="message.file" [download]="message.fileName">
                 <h1>{{ message.fileName }}</h1>
               </a>
               <span class="chat-time">{{message.sentDate | dateDisplay}}</span>
             </div>
+            <!-- END -->
           </div>
           <mat-toolbar class="chat-bubble-container" *ngIf="isSending == true">
             <mat-progress-bar mode="indeterminate"></mat-progress-bar>

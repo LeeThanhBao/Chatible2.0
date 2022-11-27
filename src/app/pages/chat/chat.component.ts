@@ -2,13 +2,12 @@ import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { Router } from '@angular/router';
 import { combineLatest, map, Observable, of, startWith, switchMap, tap } from 'rxjs';
-import { DomSanitizer } from '@angular/platform-browser';
+// import { DomSanitizer } from '@angular/platform-browser';
 
 import { MatDialog, MAT_DIALOG_DATA } from '@angular/material/dialog';
-import Peer from 'peerjs';
+// import Peer from 'peerjs';
 
-// import { VideoCallComponent } from './components/video-call/video-call.component';
-
+// import { VideoCallComponent } from './pages/chat/components/video-call/video-call.component';
 // import { CallService } from 'src/app/services/call.service';
 // import { AuthService } from 'src/app/services/auth.service';
 // import { DataService } from 'src/app/services/data.service';
@@ -22,7 +21,7 @@ import { UsersService } from 'src/app/services/users.service';
 import { AuthenticationService } from 'src/app/services/authentication.service';
 import { CallService } from 'src/app/services/call.service';
 import { DataService } from 'src/app/services/data.service';
-import { VideoCallComponent } from 'src/app/components/video-call/video-call.component';
+import { VideoCallComponent } from 'src/app/pages/chat/components/video-call/video-call.component';
 import { ImageUploadService } from 'src/app/services/image-upload.service';
 import { SearchDialogComponent } from './components/search-dialog/search-dialog.component';
 import { NotificationDialogComponent } from './components/notification-dialog/notification-dialog.component';
@@ -265,7 +264,7 @@ export class ChatComponent implements OnInit {
       if (this.endOfChat) {
         this.endOfChat.nativeElement.scrollIntoView({ behavior: 'smooth' });
       }
-    }, 100);
+    }, 200);
   }
 
   async uploadFile(event: any) {
