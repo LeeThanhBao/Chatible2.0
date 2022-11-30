@@ -140,6 +140,18 @@ nav.open {
 	display: flex;
 	flex-direction: row;
 }
+.curruser {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	font-size: 15px;
+	border-radius: 0.35rem;
+	color: #707070;
+	margin: 1rem;
+	padding: 1rem;
+	background-color: rgba(0, 0, 0, 0.1);
+	text-align: center;
+}
 
 //FRIENDLIST
 .friendlist {
@@ -582,15 +594,13 @@ input {
 		text-decoration: none;
 		color: #fff;
 		font-size: 20px;
-		
 	}
 }
-
 h2 {
 	margin: 0;
 }
 .chat-area {
-	height: calc(85vh - 270px);
+	height: calc(90vh - 270px);
 	display: flex;
 	flex-direction: column;
 	align-items: flex-start;
@@ -632,44 +642,26 @@ h2 {
 .chat-bubble-container.sender {
 	justify-content: flex-end;
 }
-.input-area {
-	padding-top: 16px;
+.input-area-container {
+	padding-top: 8px;
 	padding-bottom: 8px;
+}
+.input-area{
+	display: flex;
+	flex-direction: row;	
 }
 mat-form-field {
 	width: 100%;
 }
+mat-icon {
+	margin: 5px 5px 10px 5px
+}
 //KẾT THÚC PHẦN MỚI NHẤT
 
 //EMOJI
-.emoji-container {
-	display: grid;
-	grid-template-columns: 100% 0%;
-	width: 36%;
-	button {
-		background: transparent;
-		border: 0;
-		transform: translateX(-40px);
-		cursor: pointer;
-		&:focus {
-			outline: 0;
-		}
-	}
+.emoji-mart{
+	position: absolute;
+	top: 50%;
+	left: 5%;
 }
 //KẾT THÚC EMOJI
-
-.sidebar-card {
-	display: flex;
-	flex-direction: column;
-	align-items: center;
-	font-size: 15px;
-	border-radius: 0.35rem;
-	color: #707070;
-	// margin-left: 1rem;
-	// margin-right: 1rem;
-	// margin-bottom: 1rem;
-	margin: 1rem;
-	padding: 1rem;
-	background-color: rgba(0, 0, 0, 0.1);
-	text-align: center;
-  }
