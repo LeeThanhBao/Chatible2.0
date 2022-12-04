@@ -12,9 +12,9 @@
     <div class="sidebar-content">
       <ul class="lists">
         <li class="list">
-          <div class="curruser">
-            <p>You're logged in as: </p>
-            <strong>[USER'S NAME HERE]</strong>
+          <div *ngIf="user$ | async as user" class="curruser">
+            <p>You're logged in as:</p>
+            <strong>{{ user.displayName }}</strong>
           </div>
         </li>
         <li class="list">
@@ -27,8 +27,12 @@
           <a class="nav-link">
             <i class="bi bi-bell-fill icon"></i>
 
-            <span *ngIf="user$ | async as user" class="link" (click)="openNotificationDialog(user)">Notifications {{
-              user.notification.length }}</span>
+            <span
+              *ngIf="user$ | async as user"
+              class="link"
+              (click)="openNotificationDialog(user)"
+              >Notifications {{ user.notification.length }}</span
+            >
           </a>
         </li>
         <li class="list">
@@ -64,7 +68,11 @@
         <li class="list">
           <a class="nav-link">
             <i class="bi bi-microsoft icon"></i>
-            <input type="text" id="remoteId" placeholder="enter Id you want to call" />
+            <input
+              type="text"
+              id="remoteId"
+              placeholder="enter Id you want to call"
+            />
           </a>
         </li>
       </ul>
@@ -94,7 +102,12 @@
       <div class="searchbarcontainer">
         <form role="search" method="get" class="search-form form" action="">
           <label>
-            <input type="search" class="search-field" placeholder="Type something..." [formControl]="searchControl" />
+            <input
+              type="search"
+              class="search-field"
+              placeholder="Type something..."
+              [formControl]="searchControl"
+            />
           </label>
           <div (click)="searchUser()">
             <i class="bi bi-search search-submit button"></i>
@@ -106,10 +119,17 @@
     <mat-selection-list [multiple]="false" [formControl]="chatListControl">
       <mat-divider></mat-divider>
 
-      <mat-list-option style="width: 100%; height: 100%" *ngFor="let chat of myChats$ | async" [value]="chat.id">
+      <mat-list-option
+        style="width: 100%; height: 100%"
+        *ngFor="let chat of myChats$ | async"
+        [value]="chat.id"
+      >
         <div style="display: flex; flex-direction: row">
           <div style="display: flex; flex-direction: row">
-            <img class="friendlistavatar" [src]="chat.chatPic ? chat.chatPic : 'assets/images/avatar1.png'" />
+            <img
+              class="friendlistavatar"
+              [src]="chat.chatPic ? chat.chatPic : 'assets/images/avatar1.png'"
+            />
             <div style="display: flex; flex-direction: column">
               <p class="chat-title">
                 <span class="name-font">{{ chat.chatName }}</span>
@@ -121,7 +141,7 @@
             <p class="chat-title">
               <span class="chat-date">{{
                 chat.lastMessageDate | dateDisplay
-                }}</span>
+              }}</span>
             </p>
           </div>
         </div>
@@ -131,11 +151,25 @@
   </div>
 
   <div class="chatarea" *ngIf="selectedChat$ | async as selectedChat">
-    <div class="left-header-container" *ngIf="selectedChat$ | async as selectedChat">
-      <img class="avatarChat" [src]="selectedChat.chatPic ? selectedChat.chatPic: 'assets/images/avatar1.png'"/>
+    <div
+      class="left-header-container"
+      *ngIf="selectedChat$ | async as selectedChat"
+    >
+      <img
+        class="avatarChat"
+        [src]="
+          selectedChat.chatPic
+            ? selectedChat.chatPic
+            : 'assets/images/avatar1.png'
+        "
+      />
       <span class="header-bold">{{ selectedChat.chatName }}</span>
       <div class="kebab-menu">
-        <i class="bi bi-telephone-forward-fill" id="btn-call" (click)="openWindow()"></i>
+        <i
+          class="bi bi-telephone-forward-fill"
+          id="btn-call"
+          (click)="openWindow()"
+        ></i>
         <i class="bi bi-camera-video-fill"></i>
         <i class="bi bi-list-ul"></i>
       </div>
@@ -146,21 +180,33 @@
     <div class="chat-area">
       <ng-container *ngIf="user$ | async as currentUser">
         <ng-container *ngIf="messages$ | async as messages">
-          <div class="chat-bubble-container" [ngClass]="{ sender: message.senderId === currentUser.uid }" *ngFor="let message of messages">
+          <div
+            class="chat-bubble-container"
+            [ngClass]="{ sender: message.senderId === currentUser.uid }"
+            *ngFor="let message of messages"
+          >
             <!-- TEXT -->
             <div *ngIf="message.text" class="chat-bubble-message">
               {{ message.text }}
-              <span class="chat-time">{{message.sentDate | dateDisplay}}</span>
+              <span class="chat-time">{{
+                message.sentDate | dateDisplay
+              }}</span>
             </div>
 
             <!-- IMG -->
             <div *ngIf="message.image" class="chat-bubble-img">
               <div class="downloadbtncontainer">
-                <a href={{message.image}} target="_blank" class="downloadbtn bi-arrows-angle-expand"></a>
+                <a
+                  href="{{ message.image }}"
+                  target="_blank"
+                  class="downloadbtn bi-arrows-angle-expand"
+                ></a>
               </div>
-              <img [src]="message.image" class="imgChat"/>
-              
-              <span class="chat-time">{{message.sentDate | dateDisplay}}</span>
+              <img [src]="message.image" class="imgChat" />
+
+              <span class="chat-time">{{
+                message.sentDate | dateDisplay
+              }}</span>
             </div>
 
             <!-- FILE -->
@@ -168,7 +214,9 @@
               <a [href]="message.file" [download]="message.fileName">
                 <h1>{{ message.fileName }}</h1>
               </a>
-              <span class="chat-time">{{message.sentDate | dateDisplay}}</span>
+              <span class="chat-time">{{
+                message.sentDate | dateDisplay
+              }}</span>
             </div>
             <!-- END -->
           </div>
@@ -183,29 +231,50 @@
     <div class="input-area-container">
       <mat-form-field appearance="outline">
         <div class="input-area">
-          <mat-icon matSuffix (click)="selectEmoji.click()">sentiment_very_satisfied </mat-icon>
+          <mat-icon matSuffix (click)="selectEmoji.click()"
+            >sentiment_very_satisfied
+          </mat-icon>
 
-          <input matInput placeholder="Enter your message..."
-          [(ngModel)]="emoji"  
-          [formControl]="messageControl"
-          (keydown.enter)="sendMessage()"/>
-          
-          <mat-icon matSuffix (click)="selectFile.click()"> attach_file</mat-icon>
-          
+          <input
+            matInput
+            placeholder="Enter your message..."
+            [(ngModel)]="emoji"
+            [formControl]="messageControl"
+            (keydown.enter)="sendMessage()"
+          />
+
+          <mat-icon matSuffix (click)="selectFile.click()">
+            attach_file</mat-icon
+          >
+
           <mat-icon matSuffix (click)="sendMessage()">send</mat-icon>
         </div>
       </mat-form-field>
 
       <!-- File selection-->
-      <input style="display: none" type="file" (change)="uploadFile($event)" #selectFile/>
+      <input
+        style="display: none"
+        type="file"
+        (change)="uploadFile($event)"
+        #selectFile
+      />
 
       <!-- Emoji selection-->
-      <input style="display: none" (click)="isEmojiPickerVisible = !isEmojiPickerVisible" #selectEmoji/>
-      <emoji-mart class="emoji-mart" (emojiSelect)="addEmoji($event)" *ngIf="isEmojiPickerVisible" title="Choose your emoji"> 
+      <input
+        style="display: none"
+        (click)="isEmojiPickerVisible = !isEmojiPickerVisible"
+        #selectEmoji
+      />
+      <emoji-mart
+        class="emoji-mart"
+        (emojiSelect)="addEmoji($event)"
+        *ngIf="isEmojiPickerVisible"
+        title="Choose your emoji"
+      >
       </emoji-mart>
       <!-- <div class="emoji-container" #selectEmoji>
         <button (click)="isEmojiPickerVisible = !isEmojiPickerVisible">😀</button>
-      </div> --> 
+      </div> -->
     </div>
   </div>
 </section>
