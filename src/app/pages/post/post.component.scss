@@ -139,6 +139,7 @@ nav.open {
 	);
 	display: flex;
 	flex-direction: row;
+	
 }
 
 .friendlist {
@@ -150,6 +151,7 @@ nav.open {
 	position: absolute;
     left: 15px;
     top: 25px;
+	overflow: scroll;
 }
 
 input {
@@ -246,7 +248,7 @@ input {
       }
   
       mat-card.posts {
-  
+
         .posts__header {
           display:flex;
   
