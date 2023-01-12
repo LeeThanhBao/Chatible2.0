@@ -116,6 +116,7 @@ export class ChatsService {
         fileName: name,
       };
     }
+    console.log(payload);
     const ref = collection(this.firestore, 'chats', chatId, 'messages');
     const chatRef = doc(this.firestore, 'chats', chatId);
     const today = Timestamp.fromDate(new Date());
