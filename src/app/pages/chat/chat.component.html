@@ -226,55 +226,34 @@
         </ng-container>
       </ng-container>
       <div #endOfChat></div>
-    </div>
-
-    <div class="input-area-container">
-      <mat-form-field appearance="outline">
-        <div class="input-area">
-          <mat-icon matSuffix (click)="selectEmoji.click()"
-            >sentiment_very_satisfied
-          </mat-icon>
-
-          <input
-            matInput
-            placeholder="Enter your message..."
-            [(ngModel)]="emoji"
-            [formControl]="messageControl"
-            (keydown.enter)="sendMessage()"
-          />
-
-          <mat-icon matSuffix (click)="selectFile.click()">
-            attach_file</mat-icon
-          >
-
-          <mat-icon matSuffix (click)="sendMessage()">send</mat-icon>
-        </div>
-      </mat-form-field>
-
-      <!-- File selection-->
-      <input
-        style="display: none"
-        type="file"
-        (change)="uploadFile($event)"
-        #selectFile
-      />
-
-      <!-- Emoji selection-->
-      <input
-        style="display: none"
-        (click)="isEmojiPickerVisible = !isEmojiPickerVisible"
-        #selectEmoji
-      />
       <emoji-mart
-        class="emoji-mart"
         (emojiSelect)="addEmoji($event)"
+        class="emoji-mart"
         *ngIf="isEmojiPickerVisible"
         title="Choose your emoji"
       >
       </emoji-mart>
-      <!-- <div class="emoji-container" #selectEmoji>
-        <button (click)="isEmojiPickerVisible = !isEmojiPickerVisible">😀</button>
-      </div> -->
     </div>
+
+    <div class="input-area">
+      <div class="emoji-container"></div>
+
+      <mat-form-field appearance="outline">
+        <input
+          [(ngModel)]="emoji"
+          matInput
+          placeholder="Enter your message..."
+          [formControl]="messageControl"
+          (keydown.enter)="sendMessage()"
+        />
+
+        <!-- <mat-icon matSuffix>sentiment_very_satisfied </mat-icon> -->
+        <mat-icon matSuffix (click)="sendMessage()">send</mat-icon>
+      </mat-form-field>
+
+      <!-- image button -->
+      <input type="file" (change)="uploadFile($event)" />
+    </div>
+    <button (click)="isEmojiPickerVisible = !isEmojiPickerVisible">😀</button>
   </div>
 </section>
