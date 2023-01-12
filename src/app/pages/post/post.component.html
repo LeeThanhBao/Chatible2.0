@@ -25,7 +25,7 @@
           </a>
         </li>
         <li class="list">
-          <a href="#" class="nav-link">
+          <a href="./chat" class="nav-link">
             <i class="bi bi-chat-right-text-fill icon"></i>
             <span class="link">Messages</span>
           </a>
@@ -132,7 +132,7 @@
           <mat-card-header class="posts__header">
             <img alt="{{ p?.title }}" mat-card-avatar [src]="p?.avatar" />
             <div class="posts__header__right">
-              <span>{{ p?.time?.seconds * 1000 | date: "shortTime" }}</span>
+              <span>{{ p?.time?.seconds * 1000 | date : "shortTime" }}</span>
               <h3>{{ p?.title }}</h3>
             </div>
           </mat-card-header>

@@ -12,9 +12,9 @@
     <div class="sidebar-content">
       <ul class="lists">
         <li class="list">
-          <div class="sidebar-card">
+          <div *ngIf="user$ | async as user" class="curruser">
             <p>You're logged in as:</p>
-            <strong>[USER'S NAME HERE]</strong>
+            <strong>{{ user.displayName }}</strong>
           </div>
         </li>
         <li class="list">
@@ -164,10 +164,7 @@
         "
       />
       <span class="header-bold">{{ selectedChat.chatName }}</span>
-      <div
-        class="kebab-menu"
-        style="font-size: 30px; display: flex; flex-direction: row; gap: 30px"
-      >
+      <div class="kebab-menu">
         <i
           class="bi bi-telephone-forward-fill"
           id="btn-call"
